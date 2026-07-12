@@ -9,6 +9,9 @@
 <meta property="og:title" content="Portrait Realism Academy by Federico Galliani — Milwaukee 2026">
 <meta property="og:description" content="3-day black &amp; grey portrait realism masterclass. Milwaukee · Oct 6–8, 2026 · 10 seats.">
 <meta property="og:type" content="website"><meta property="og:url" content="https://portraitrealismacademy.com/">
+<meta property="og:image" content="https://portraitrealismacademy.com/assets/portfolio/hiphop-nyc-portrait.webp">
+<meta property="og:image:alt" content="Black &amp; grey portrait realism tattoo by Federico Galliani">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <!-- Meta Pixel -->
@@ -95,22 +98,48 @@ var FB_PIXEL_ID='__PIXEL_ID__';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){fbq('
   .row.two{grid-template-columns:1fr 1fr}
  }
  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+ /* hero portrait */
+ .herogrid{display:grid;grid-template-columns:1fr;gap:32px;align-items:center}
+ .htext{min-width:0}
+ .heroart{position:relative;margin:0;border:1px solid rgba(194,168,120,.3);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);max-width:360px}
+ .heroart img{display:block;width:100%;height:auto;object-fit:cover;filter:saturate(1.02) contrast(1.03)}
+ .heroart figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 16px 13px;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--bone);background:linear-gradient(transparent,rgba(0,0,0,.75))}
+ /* gallery */
+ .gal{columns:2;column-gap:12px;margin-top:38px}
+ .gal a{display:block;margin:0 0 12px;break-inside:avoid;border-radius:10px;overflow:hidden;border:1px solid var(--line);position:relative;cursor:zoom-in;background:#0e0e11}
+ .gal img{display:block;width:100%;height:auto;transition:transform .5s ease,filter .5s}
+ .gal a:hover img{transform:scale(1.045);filter:brightness(1.08)}
+ /* lightbox */
+ .lb{position:fixed;inset:0;z-index:100;background:rgba(6,6,8,.95);display:none;align-items:center;justify-content:center;padding:18px}
+ .lb.on{display:flex}
+ .lb img{max-width:94vw;max-height:90vh;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.7)}
+ .lb .x{position:absolute;top:14px;right:20px;color:var(--bone);font-size:34px;cursor:pointer;line-height:1;opacity:.85}
+ .lb .x:hover{color:var(--acc)}
+ @media(min-width:680px){.gal{columns:3;column-gap:14px}.gal a{margin-bottom:14px}}
+ @media(min-width:820px){.herogrid{grid-template-columns:1.12fr .88fr;gap:48px}.heroart{max-width:none}}
+ @media(min-width:1024px){.gal{columns:4}}
 </style></head>
 <body>
 <nav id="nav">
   <a class="lg" href="#" translate="no">PORTRAIT&nbsp;REALISM&nbsp;ACADEMY</a>
-  <div class="nl"><a href="#program">Program</a><a href="#includes">Includes</a><a href="#details">Details</a><a href="#instructor">Instructor</a></div>
+  <div class="nl"><a href="#program">Program</a><a href="#includes">Includes</a><a href="#work">Work</a><a href="#details">Details</a><a href="#instructor">Instructor</a></div>
   <a class="ap" href="#apply">Apply</a>
 </nav>
 
 <header class="hero">
-  <div class="wrap in">
-    <div class="kick">Black &amp; grey portrait masterclass · Milwaukee 2026</div>
-    <h1>Portrait Realism,<br><span class="it">taught in three days.</span></h1>
-    <p class="sub">A hands-on black &amp; grey portrait realism masterclass with award-winning artist <b style="color:var(--bone);font-weight:400" translate="no">Federico Galliani</b> — theory, live demo, and your own supervised practice on real models.</p>
-    <div class="meta"><span><b>Oct 6–8, 2026</b></span><span><b>Milwaukee, WI</b> · SOL Studios</span><span>Only <b>10 seats</b></span><span>Intermediate &amp; advanced · English</span></div>
-    <div class="cta"><a class="btn p" href="#apply">Apply for a seat</a><a class="btn g" href="#program">See the program</a></div>
-    <div class="cd" id="cd"></div>
+  <div class="wrap in herogrid">
+    <div class="htext">
+      <div class="kick">Black &amp; grey portrait masterclass · Milwaukee 2026</div>
+      <h1>Portrait Realism,<br><span class="it">taught in three days.</span></h1>
+      <p class="sub">A hands-on black &amp; grey portrait realism masterclass with award-winning artist <b style="color:var(--bone);font-weight:400" translate="no">Federico Galliani</b> — theory, live demo, and your own supervised practice on real models.</p>
+      <div class="meta"><span><b>Oct 6–8, 2026</b></span><span><b>Milwaukee, WI</b> · SOL Studios</span><span>Only <b>10 seats</b></span><span>Intermediate &amp; advanced · English</span></div>
+      <div class="cta"><a class="btn p" href="#apply">Apply for a seat</a><a class="btn g" href="#work">See the work</a></div>
+      <div class="cd" id="cd"></div>
+    </div>
+    <figure class="heroart rv">
+      <img src="assets/portfolio/hero-old-man.webp" width="784" height="980" alt="Photorealistic black & grey portrait tattoo of an elderly man by Federico Galliani" fetchpriority="high">
+      <figcaption>Black &amp; grey realism · Federico Galliani</figcaption>
+    </figure>
   </div>
 </header>
 
@@ -177,6 +206,29 @@ var FB_PIXEL_ID='__PIXEL_ID__';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){fbq('
   </div>
 </div></section>
 
+<section class="s" id="work" style="padding-top:0"><div class="wrap">
+  <div class="eyebrow rv">The work</div>
+  <h2 class="rv">Portraits that hold up.</h2>
+  <p class="lead rv">A selection of Federico's black &amp; grey portrait realism — the level of detail, contrast and longevity you'll learn to build over the three days. Tap any piece to enlarge.</p>
+  <div class="gal rv">
+    <a href="assets/portfolio/hiphop-nyc-portrait.webp"><img loading="lazy" width="1050" height="1400" src="assets/portfolio/hiphop-nyc-portrait.webp" alt="Black & grey realism portrait with New York City skyline, forearm tattoo"></a>
+    <a href="assets/portfolio/woman-skull-realism.webp"><img loading="lazy" width="787" height="1400" src="assets/portfolio/woman-skull-realism.webp" alt="Realistic woman's face with skull detail, black & grey sleeve tattoo"></a>
+    <a href="assets/portfolio/greek-statue-backpiece.webp"><img loading="lazy" width="1080" height="1350" src="assets/portfolio/greek-statue-backpiece.webp" alt="Large black & grey realism back piece of a Greek statue"></a>
+    <a href="assets/portfolio/young-man-portrait.webp"><img loading="lazy" width="936" height="1400" src="assets/portfolio/young-man-portrait.webp" alt="Clean black & grey realism portrait of a young man, forearm tattoo"></a>
+    <a href="assets/portfolio/father-son-portrait.webp"><img loading="lazy" width="1005" height="1400" src="assets/portfolio/father-son-portrait.webp" alt="Emotive double portrait in black & grey realism, forearm tattoo"></a>
+    <a href="assets/portfolio/man-raven-realism.webp"><img loading="lazy" width="788" height="1400" src="assets/portfolio/man-raven-realism.webp" alt="Moody black & grey realism portrait with a raven"></a>
+    <a href="assets/portfolio/elder-portrait-leg.webp"><img loading="lazy" width="1035" height="1294" src="assets/portfolio/elder-portrait-leg.webp" alt="Black & grey realism portrait of a bearded elder, leg tattoo"></a>
+    <a href="assets/portfolio/skull-eye-realism.webp"><img loading="lazy" width="1050" height="1400" src="assets/portfolio/skull-eye-realism.webp" alt="Skull and eye composition, black & grey realism forearm tattoo"></a>
+    <a href="assets/portfolio/horror-clown-realism.webp"><img loading="lazy" width="1082" height="1400" src="assets/portfolio/horror-clown-realism.webp" alt="Black & grey horror realism portrait, forearm tattoo"></a>
+    <a href="assets/portfolio/horror-portrait-arm.webp"><img loading="lazy" width="1120" height="1400" src="assets/portfolio/horror-portrait-arm.webp" alt="Detailed black & grey horror realism portrait, arm tattoo"></a>
+    <a href="assets/portfolio/villain-portrait.webp"><img loading="lazy" width="1050" height="1400" src="assets/portfolio/villain-portrait.webp" alt="Two-face villain portrait in black & grey realism, forearm tattoo"></a>
+    <a href="assets/portfolio/creature-realism.webp"><img loading="lazy" width="1073" height="1400" src="assets/portfolio/creature-realism.webp" alt="Dark creature portrait in black & grey realism"></a>
+    <a href="assets/portfolio/legends-full-sleeve.webp"><img loading="lazy" width="1120" height="1400" src="assets/portfolio/legends-full-sleeve.webp" alt="Full sleeve of black & grey realism portraits"></a>
+    <a href="assets/portfolio/realistic-eye-detail.webp"><img loading="lazy" width="934" height="1400" src="assets/portfolio/realistic-eye-detail.webp" alt="Hyper-realistic eye detail, black & grey tattoo"></a>
+  </div>
+  <p class="lead rv" style="margin-top:22px">See the full portfolio on Instagram <a class="work" href="https://www.instagram.com/federicogallianitattoo/" target="_blank" rel="noopener">@federicogallianitattoo</a>.</p>
+</div></section>
+
 <section class="s" style="padding-top:0"><div class="wrap">
   <div class="eyebrow rv">FAQ</div>
   <h2 class="rv">Good to know.</h2>
@@ -215,10 +267,12 @@ var FB_PIXEL_ID='__PIXEL_ID__';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){fbq('
   <p style="margin-top:8px;opacity:.55">© 2026 Portrait Realism Academy. Milwaukee · Oct 6–8, 2026.</p>
 </div></footer>
 
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Enlarged artwork"><span class="x" id="lbx" aria-label="Close">&times;</span><img id="lbi" src="" alt="Enlarged black &amp; grey realism tattoo by Federico Galliani"></div>
+
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
 {"@type":"Person","@id":"https://portraitrealismacademy.com/#federico","name":"Federico Galliani","alternateName":"Portrait KID","jobTitle":"Realistic Tattoo Artist","description":"Italian black & grey portrait-realism tattoo artist, co-owner of White Label Tattoo, award-winning on the U.S. convention circuit.","sameAs":["https://www.instagram.com/federicogallianitattoo/","https://www.facebook.com/federicogallianitattoo/","https://www.youtube.com/channel/UC0L-umoT_C2Mn4W6vChXeRQ"]},
-{"@type":"Course","name":"Portrait Realism Academy by Federico Galliani","description":"A 3-day hands-on black & grey portrait realism tattoo masterclass: theory, live demo and supervised practice on real models. Intermediate and advanced artists.","inLanguage":"en","provider":{"@id":"https://portraitrealismacademy.com/#federico"},"educationalLevel":"Intermediate to advanced","hasCourseInstance":{"@type":"CourseInstance","courseMode":"in-person","location":{"@type":"Place","name":"SOL Studios","address":{"@type":"PostalAddress","streetAddress":"11000 W Janesville Rd","addressLocality":"Hales Corners","addressRegion":"WI","postalCode":"53130","addressCountry":"US"}},"startDate":"2026-10-06","endDate":"2026-10-08","instructor":{"@id":"https://portraitrealismacademy.com/#federico"},"maximumAttendeeCapacity":10,"offers":{"@type":"Offer","price":"2000","priceCurrency":"USD","availability":"https://schema.org/LimitedAvailability"}}},
+{"@type":"Course","name":"Portrait Realism Academy by Federico Galliani","description":"A 3-day hands-on black & grey portrait realism tattoo masterclass: theory, live demo and supervised practice on real models. Intermediate and advanced artists.","image":["https://portraitrealismacademy.com/assets/portfolio/hero-old-man.webp","https://portraitrealismacademy.com/assets/portfolio/hiphop-nyc-portrait.webp","https://portraitrealismacademy.com/assets/portfolio/greek-statue-backpiece.webp"],"inLanguage":"en","provider":{"@id":"https://portraitrealismacademy.com/#federico"},"educationalLevel":"Intermediate to advanced","hasCourseInstance":{"@type":"CourseInstance","courseMode":"in-person","location":{"@type":"Place","name":"SOL Studios","address":{"@type":"PostalAddress","streetAddress":"11000 W Janesville Rd","addressLocality":"Hales Corners","addressRegion":"WI","postalCode":"53130","addressCountry":"US"}},"startDate":"2026-10-06","endDate":"2026-10-08","instructor":{"@id":"https://portraitrealismacademy.com/#federico"},"maximumAttendeeCapacity":10,"offers":{"@type":"Offer","price":"2000","priceCurrency":"USD","availability":"https://schema.org/LimitedAvailability"}}},
 {"@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Who is this masterclass for?","acceptedAnswer":{"@type":"Answer","text":"Working tattoo artists at an intermediate or advanced level who want to specialize in black & grey portrait realism. Taught in English."}},
 {"@type":"Question","name":"How much is it and how do I reserve a seat?","acceptedAnswer":{"@type":"Answer","text":"Tuition is $2,000. A $500 deposit reserves one of the 10 seats; the balance can be paid in installments before the class."}},
@@ -237,6 +291,12 @@ var FB_PIXEL_ID='__PIXEL_ID__';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){fbq('
  tick();setInterval(tick,1000);
  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14});
  [].forEach.call(document.querySelectorAll('.rv'),function(el){io.observe(el);});
+ // lightbox
+ var lb=document.getElementById('lb'),lbi=document.getElementById('lbi');
+ document.querySelector('.gal').addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;e.preventDefault();lbi.src=a.getAttribute('href');lb.classList.add('on');});
+ function closeLb(){lb.classList.remove('on');lbi.src='';}
+ lb.addEventListener('click',function(e){if(e.target===lb||e.target.id==='lbx')closeLb();});
+ addEventListener('keydown',function(e){if(e.key==='Escape')closeLb();});
  var f=document.getElementById('bf');
  f.addEventListener('submit',function(e){e.preventDefault();var d=new FormData(f);d.append('_subject','New Academy application — '+f.first.value+' '+f.last.value);d.append('_template','table');d.append('_captcha','false');var b=f.querySelector('button');b.disabled=true;b.textContent='Sending…';
   fetch('https://formsubmit.co/ajax/marcoetingcrd@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:d}).then(function(r){return r.json();}).then(function(){document.getElementById('ok').style.display='block';f.reset();b.textContent='Sent ✓';if(window.fbq&&FB_PIXEL_ID.indexOf('_')<0)fbq('track','Lead',{content_name:'academy-application'});}).catch(function(){b.disabled=false;b.textContent='Submit application';window.location.href='mailto:marcoetingcrd@gmail.com?subject=Academy%20application';});
