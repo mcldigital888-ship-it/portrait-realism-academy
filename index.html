@@ -78,6 +78,9 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
  .cmp .tag.l{left:12px}.cmp .tag.r{right:12px}
  .cmp .cmp-h{position:absolute;top:0;bottom:0;left:50%;width:2px;background:rgba(255,255,255,.85);z-index:5;transform:translateX(-1px);pointer-events:none}
  .cmp .cmp-h::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:var(--acc);color:#171308;font-size:15px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+ .cmp .cmp-mute{position:absolute;top:10px;right:10px;z-index:7;width:36px;height:36px;border-radius:50%;border:1px solid rgba(234,231,225,.28);background:rgba(0,0,0,.55);color:#fff;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;backdrop-filter:blur(3px);transition:border-color .2s,opacity .2s}
+ .cmp .cmp-mute:hover{border-color:var(--acc)}
+ .cmp .cmp-mute.muted{opacity:.65}
  .cmphint{text-align:center;color:var(--mut);font-size:12.5px;letter-spacing:1px;margin-top:14px}
  /* gallery */
  .gal{columns:2;column-gap:12px;margin-top:36px}
@@ -272,6 +275,7 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
     <div class="cmp-t" id="cmpT"><img id="cmpTImg" src="assets/portfolio/detail-zoom.webp" width="1000" height="1250" alt="Macro detail of the realism eye tattoo"></div>
     <span class="tag l">Detail</span><span class="tag r">Full</span>
     <span class="cmp-h" id="cmpH"></span>
+    <button class="cmp-mute" id="cmpMute" type="button" aria-label="Toggle tattoo-machine sound">🔊</button>
   </div>
   <div class="cmphint rv">← drag to inspect the detail →</div>
 </div></section>
@@ -530,40 +534,58 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
   document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href="#apply"]');if(!a||!mq('(pointer:fine)'))return;setTimeout(function(){var i=document.querySelector('#bf input');if(i)i.focus({preventScroll:true});},650);});
  })();
 
- /* 5) DOTWORK ENGINE — assembles the pre-computed portrait on scroll (desktop/capable only) */
+ /* 5) DOTWORK ENGINE — scattered dots slowly ASSEMBLE, HOLD, then MORPH into the real tattoo photo; replays on re-enter (desktop/capable only) */
  (function(){
   var stage=document.getElementById('stipStage');if(!stage||!window.STIPPLE)return;
   var coarse=mq('(pointer:coarse)')||mq('(hover:none)'),small=innerWidth<720,lowcore=(navigator.hardwareConcurrency||8)<=4,save=navigator.connection&&navigator.connection.saveData;
-  if(REDUCE||coarse||small||lowcore||save)return;               // fallback = the real poster stays
+  if(REDUCE||coarse||small||lowcore||save)return;               // fallback = the real poster (photo) stays
   var cta=document.getElementById('stipCta');
   var canvas=document.createElement('canvas');canvas.setAttribute('aria-hidden','true');stage.appendChild(canvas);
   var ctx=canvas.getContext('2d',{alpha:true});
-  // ink-dot sprite (drawn once)
   var sprite=document.createElement('canvas');sprite.width=sprite.height=24;
   (function(){var s=sprite.getContext('2d');var g=s.createRadialGradient(12,12,0,12,12,12);g.addColorStop(0,'rgba(234,231,225,1)');g.addColorStop(.55,'rgba(234,231,225,.85)');g.addColorStop(1,'rgba(234,231,225,0)');s.fillStyle=g;s.fillRect(0,0,24,24);})();
   var P=window.STIPPLE.pts;
-  var dots=P.map(function(p){var t=p[2]/9,ny=p[1]/1000;return{nx:p[0]/1000,ny:ny,ox:Math.random(),oy:Math.random(),r:0.6+t*1.8,a:0.34+t*0.66,ph:Math.random()*6.283,t0:Math.min(0.85,ny*0.6+Math.random()*0.3)};});
-  var W=0,H=0,dpr=1,rf=1,drift=0.5,built=false,running=false,raf=0,ctaShown=false,settledAt=0;
+  var dots=P.map(function(p){var t=p[2]/9,ny=p[1]/1000;return{nx:p[0]/1000,ny:ny,ox:Math.random(),oy:Math.random(),r:0.6+t*1.8,a:0.34+t*0.66,ph:Math.random()*6.283,t0:Math.min(0.82,ny*0.5+Math.random()*0.32)};});
+  var W=0,H=0,dpr=1,rf=1,drift=0.5;
   function layout(){var r=stage.getBoundingClientRect();W=Math.round(r.width);H=Math.round(r.height);dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);canvas.style.width=W+'px';canvas.style.height=H+'px';rf=W/380;}
-  function progress(){var r=stage.getBoundingClientRect(),vh=innerHeight||document.documentElement.clientHeight,start=vh*0.9,end=vh*0.28,p=(start-r.top)/(start-end);return p<0?0:p>1?1:p;}
+  var ASSEMBLE=3200, HOLD=1100, MORPH=1000;     // slow build · pause so you SEE the dot-portrait · fade to real photo
+  var state='idle', t0=0, built=false, running=false, raf=0, ctaShown=false;
+  function draw(e,now){
+   ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+   for(var i=0;i<dots.length;i++){var d=dots[i];var lt=(e-d.t0)/(1-d.t0);if(lt<=0)continue;if(lt>1)lt=1;var ee=1-Math.pow(1-lt,3);
+    var x=(d.ox+(d.nx-d.ox)*ee)*W,y=(d.oy+(d.ny-d.oy)*ee)*H;
+    if(ee>0.985){x+=Math.sin(now*0.0011+d.ph)*drift;y+=Math.cos(now*0.0009+d.ph)*drift;}
+    var rr=d.r*rf;ctx.globalAlpha=ee*d.a;ctx.drawImage(sprite,x-rr,y-rr,rr*2,rr*2);}
+   ctx.globalAlpha=1;
+  }
   function frame(now){
    if(!running){raf=0;return;}
-   var p=progress(),t=now*0.001;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
-   for(var i=0;i<dots.length;i++){var d=dots[i];var lt=(p-d.t0)/(1-d.t0);if(lt<=0)continue;if(lt>1)lt=1;var e=1-Math.pow(1-lt,3);
-    var x=(d.ox+(d.nx-d.ox)*e)*W,y=(d.oy+(d.ny-d.oy)*e)*H;
-    if(e>0.985){x+=Math.sin(t*1.1+d.ph)*drift;y+=Math.cos(t*0.9+d.ph)*drift;}
-    var rr=d.r*rf;ctx.globalAlpha=e*d.a;ctx.drawImage(sprite,x-rr,y-rr,rr*2,rr*2);}
-   ctx.globalAlpha=1;
-   if(!ctaShown&&p>0.92&&cta){ctaShown=true;cta.classList.add('reveal');}
-   if(p>=1){if(!settledAt)settledAt=now;else if(now-settledAt>4000){running=false;raf=0;return;}}else settledAt=0;
+   var el=now-t0;
+   if(state==='assembling'){
+    var p=Math.min(1,el/ASSEMBLE),e=1-Math.pow(1-p,2.2);draw(e,now);
+    if(p>=1){state='hold';t0=now;if(!ctaShown&&cta){ctaShown=true;cta.classList.add('reveal');}}
+   } else if(state==='hold'){
+    draw(1,now);
+    if(el>HOLD){state='morph';t0=now;stage.classList.remove('live');}   // CSS cross-fades: dots(canvas) OUT, real photo(poster) IN
+   } else if(state==='morph'){
+    draw(1,now);
+    if(el>MORPH){state='done';running=false;raf=0;return;}               // real tattoo now fully shown
+   }
    raf=requestAnimationFrame(frame);
   }
-  function start(){if(!running&&!document.hidden){running=true;stage.classList.add('live');if(!raf)raf=requestAnimationFrame(frame);}}
-  function stop(){running=false;}
-  var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){if(!built){built=true;layout();}start();}else stop();},{rootMargin:'220px 0px'});
+  function enter(){
+   if(!built){built=true;layout();}
+   if(state==='done')return;
+   if(state==='idle'){state='assembling';t0=performance.now();stage.classList.add('live');}
+   if(!running&&!document.hidden){running=true;if(!raf)raf=requestAnimationFrame(frame);}
+  }
+  function reset(){running=false;state='idle';ctaShown=false;if(cta)cta.classList.remove('reveal');if(W){ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);}stage.classList.add('live');}
+  stage.classList.add('live');                 // start on canvas (dots), not the photo — avoids a photo flash
+  var wasIn=false;
+  var io=new IntersectionObserver(function(es){var isIn=es[0].isIntersecting;if(isIn){enter();}else if(wasIn){reset();}wasIn=isIn;},{threshold:0.35});
   io.observe(stage);
-  document.addEventListener('visibilitychange',function(){if(document.hidden)stop();else if(built&&stage.getBoundingClientRect().top<innerHeight){settledAt=0;start();}});
-  var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){if(built){layout();settledAt=0;start();}},160);},{passive:true});
+  document.addEventListener('visibilitychange',function(){if(document.hidden){running=false;}else if(built&&wasIn&&state!=='done'&&state!=='idle'){t0=performance.now();running=true;if(!raf)raf=requestAnimationFrame(frame);}});
+  var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){if(built)layout();},160);},{passive:true});
  })();
 })();
 </script>
@@ -678,6 +700,41 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
   var relist=function(){evaluate();};
   (mqFine.addEventListener?mqFine.addEventListener('change',relist):mqFine.addListener(relist));
   (mqReduce.addEventListener?mqReduce.addEventListener('change',relist):mqReduce.addListener(relist));
+})();
+</script>
+
+<!-- Tattoo-machine buzz on the Look-Closer slider (Web Audio synth) + mute toggle -->
+<script>
+(function(){
+ var cmp=document.getElementById('cmp');if(!cmp)return;
+ var btn=document.getElementById('cmpMute');
+ var muted=false, ac=null, master=null, moveT=null, down=false;
+ function build(){
+  var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;
+  ac=new AC();
+  master=ac.createGain();master.gain.value=0;
+  var lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1650;lp.Q.value=0.6;
+  var o1=ac.createOscillator();o1.type='sawtooth';o1.frequency.value=103;
+  var o2=ac.createOscillator();o2.type='square';o2.frequency.value=207;var g2=ac.createGain();g2.gain.value=0.35;
+  // mechanical flutter on the fundamental
+  var lfo=ac.createOscillator();lfo.type='sine';lfo.frequency.value=7.5;var lg=ac.createGain();lg.gain.value=13;lfo.connect(lg);lg.connect(o1.frequency);
+  o1.connect(lp);o2.connect(g2);g2.connect(lp);lp.connect(master);master.connect(ac.destination);
+  o1.start();o2.start();lfo.start();
+  return true;
+ }
+ function ensure(){ if(!ac){ if(!build())return; } if(ac.state==='suspended')ac.resume(); }
+ function buzz(on){ if(!ac)return; var t=ac.currentTime; master.gain.cancelScheduledValues(t); master.gain.setTargetAtTime(on?0.055:0.0, t, on?0.012:0.045); }
+ function moving(){ if(muted)return; ensure(); buzz(true); clearTimeout(moveT); moveT=setTimeout(function(){buzz(false);},140); }  // stops when you stop moving
+ function end(){ down=false; clearTimeout(moveT); buzz(false); }
+ cmp.addEventListener('pointerdown',function(e){ if(btn&&(e.target===btn||btn.contains(e.target)))return; down=true; moving(); });
+ cmp.addEventListener('pointermove',function(e){ if(down) moving(); });
+ cmp.addEventListener('pointerup',end);
+ cmp.addEventListener('pointercancel',end);
+ cmp.addEventListener('pointerleave',end);
+ if(btn){
+  btn.addEventListener('pointerdown',function(e){e.stopPropagation();});   // don't move the slider when tapping the speaker
+  btn.addEventListener('click',function(e){e.stopPropagation();muted=!muted;btn.textContent=muted?'🔇':'🔊';btn.classList.toggle('muted',muted);btn.setAttribute('aria-label',muted?'Sound off — tap to enable':'Sound on — tap to mute');if(muted)end();});
+ }
 })();
 </script>
 </body></html>
