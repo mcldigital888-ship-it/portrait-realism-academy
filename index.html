@@ -181,6 +181,16 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
  [data-count]{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
  .pay{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
  .paynote{font-size:12px;color:var(--mut);margin-top:12px;text-align:center}
+ .snd{position:fixed;left:16px;bottom:16px;z-index:66;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(5,5,6,.7);backdrop-filter:blur(8px);color:var(--mut);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:color .25s,border-color .25s,opacity .25s}
+ .snd i{display:inline-block;width:3px;height:9px;margin:0 1.6px;background:currentColor;border-radius:2px;transform-origin:bottom center;transform:scaleY(.5)}
+ .snd:hover{border-color:var(--acc);color:var(--acc)}
+ .snd.playing{color:var(--acc);border-color:var(--acc)}
+ .snd.playing i{animation:eq .8s ease-in-out infinite}
+ .snd.playing i:nth-child(2){animation-delay:.16s}
+ .snd.playing i:nth-child(3){animation-delay:.32s}
+ @keyframes eq{0%,100%{transform:scaleY(.42)}50%{transform:scaleY(1.3)}}
+ .snd.off{opacity:.5}.snd.off i{transform:scaleY(.42)}
+ @media(min-width:820px){.snd{left:22px;bottom:22px}}
  .rv{transform:translateY(18px);transition:opacity .55s,transform .55s cubic-bezier(.2,.7,.2,1)}
  /* scroll progress (thin bronze) */
  .prog{position:fixed;top:0;left:0;height:2px;width:100%;z-index:70;background:linear-gradient(90deg,var(--acc),#e9ebec);transform:scaleX(0);transform-origin:0 50%;will-change:transform;pointer-events:none}
@@ -428,6 +438,9 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
   </nav>
   <p style="margin-top:16px;opacity:.55">© 2026 Portrait Realism Academy. Milwaukee · Oct 6–8, 2026.</p>
 </div></footer>
+
+<!-- ambient sound toggle (equalizer) -->
+<button class="snd" id="sndToggle" type="button" aria-label="Toggle sound"><i></i><i></i><i></i></button>
 
 <!-- sticky CTA bar -->
 <div class="sticky" id="sticky"><div class="sbin">
@@ -773,6 +786,51 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
   }
   // else: href stays "#apply" → smooth-scrolls to the application form (no dead button)
  });
+})();
+</script>
+
+<!-- Ambient techno (Web Audio synth) — starts on first scroll, plays while the hero is in view, stops when you leave it, resumes when you scroll back up. Toggle to mute. -->
+<script>
+(function(){
+ var hero=document.querySelector('.hero'), btn=document.getElementById('sndToggle');
+ if(!hero||!btn) return;
+ var AC=window.AudioContext||window.webkitAudioContext; if(!AC){btn.style.display='none';return;}
+ var ac=null,master=null,noise=null,running=false,unlocked=false,heroIn=true,timer=null;
+ var muted=false; try{muted=localStorage.getItem('prm_snd')==='off';}catch(e){}
+ var bpm=126, sec16=60/bpm/4, nextTime=0, step=0, bar=0;
+ function mkNoise(){var len=Math.floor(ac.sampleRate*1);var b=ac.createBuffer(1,len,ac.sampleRate);var d=b.getChannelData(0);for(var i=0;i<len;i++)d[i]=Math.random()*2-1;return b;}
+ function build(){ac=new AC();master=ac.createGain();master.gain.value=0;var comp=ac.createDynamicsCompressor();master.connect(comp);comp.connect(ac.destination);noise=mkNoise();}
+ function kick(t){var o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(132,t);o.frequency.exponentialRampToValueAtTime(45,t+0.11);g.gain.setValueAtTime(0.9,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.20);o.connect(g);g.connect(master);o.start(t);o.stop(t+0.22);}
+ function hat(t,open){var s=ac.createBufferSource();s.buffer=noise;var hp=ac.createBiquadFilter();hp.type='highpass';hp.frequency.value=7200;var g=ac.createGain();var d=open?0.09:0.03;g.gain.setValueAtTime(0.16,t);g.gain.exponentialRampToValueAtTime(0.001,t+d);s.connect(hp);hp.connect(g);g.connect(master);s.start(t);s.stop(t+d+0.02);}
+ function clap(t){var s=ac.createBufferSource();s.buffer=noise;var bp=ac.createBiquadFilter();bp.type='bandpass';bp.frequency.value=1650;bp.Q.value=0.8;var g=ac.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.4,t+0.005);g.gain.exponentialRampToValueAtTime(0.001,t+0.13);s.connect(bp);bp.connect(g);g.connect(master);s.start(t);s.stop(t+0.15);}
+ function bass(t,f){var o=ac.createOscillator();o.type='sawtooth';o.frequency.value=f;var lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=240;lp.Q.value=7;var g=ac.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.3,t+0.01);g.gain.exponentialRampToValueAtTime(0.001,t+sec16*1.7);o.connect(lp);lp.connect(g);g.connect(master);o.start(t);o.stop(t+sec16*1.9);}
+ function stab(t){var lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.setValueAtTime(1900,t);lp.frequency.exponentialRampToValueAtTime(420,t+0.26);lp.Q.value=5;var g=ac.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.12,t+0.01);g.gain.exponentialRampToValueAtTime(0.001,t+0.3);lp.connect(g);g.connect(master);[146.83,174.61,220.0].forEach(function(f){var o=ac.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=(Math.random()-0.5)*9;o.connect(lp);o.start(t);o.stop(t+0.32);});}
+ var bassSeq=[55,55,82.41,55,55,55,73.42,55];
+ function playStep(s,t){
+  if(s%4===0)kick(t);
+  if(s%2===0)hat(t,s%8===6);
+  if(s===4||s===12)clap(t);
+  if(s%2===0)bass(t,bassSeq[(s/2)%bassSeq.length]);
+  if(s===0&&bar%4===2)stab(t);
+ }
+ function scheduler(){ if(!running)return; while(nextTime<ac.currentTime+0.12){playStep(step,nextTime);nextTime+=sec16;step++;if(step>=16){step=0;bar++;}} timer=setTimeout(scheduler,25); }
+ function startSeq(){if(running)return;running=true;step=0;bar=0;nextTime=ac.currentTime+0.06;scheduler();}
+ function stopSeq(){running=false;if(timer){clearTimeout(timer);timer=null;}}
+ function fade(on){if(!ac)return;var t=ac.currentTime;master.gain.cancelScheduledValues(t);master.gain.setTargetAtTime(on?0.24:0.0,t,on?0.35:0.25);}
+ function want(){return unlocked&&!muted&&heroIn&&!document.hidden;}
+ function apply(){
+  if(!ac){btn.classList.toggle('off',muted);return;}
+  if(want()){if(ac.state==='suspended')ac.resume();startSeq();fade(true);}
+  else{fade(false);setTimeout(function(){if(!want())stopSeq();},320);}
+  btn.classList.toggle('playing',want());
+  btn.classList.toggle('off',muted&&!want());
+ }
+ function unlock(){if(unlocked)return;unlocked=true;if(!ac)build();apply();}
+ ['scroll','pointerdown','keydown','touchstart','wheel'].forEach(function(ev){addEventListener(ev,unlock,{passive:true,once:true});});
+ new IntersectionObserver(function(es){heroIn=es[0].isIntersecting;if(unlocked)apply();},{threshold:0.15}).observe(hero);
+ document.addEventListener('visibilitychange',function(){if(document.hidden)fade(false);else if(unlocked)apply();});
+ btn.addEventListener('click',function(){muted=!muted;try{localStorage.setItem('prm_snd',muted?'off':'on');}catch(e){}if(!unlocked){unlocked=true;if(!ac)build();}apply();});
+ btn.classList.toggle('off',muted);
 })();
 </script>
 </body></html>
