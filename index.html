@@ -160,7 +160,7 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
  .rv.in{opacity:1;transform:none}
  .rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.22s}.rv.d3{transition-delay:.34s}
  @media(min-width:820px){
-  nav{padding:18px 40px}nav .nl{display:block}nav .lg{font-size:17px;letter-spacing:5px}
+  nav{padding:18px 34px}nav .lg{font-size:16px;letter-spacing:4px}
   .days{grid-template-columns:repeat(3,1fr)}.inc{grid-template-columns:1fr 1fr}
   .about{grid-template-columns:1.25fr .9fr;gap:50px}
   .row.two{grid-template-columns:1fr 1fr}
@@ -168,6 +168,9 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
   .sbtxt span{font-size:12px}
  }
  @media(min-width:1024px){.gal{columns:4}}
+ /* nav: reveal links only when there's room, then relax spacing on wide screens */
+ @media(min-width:980px){nav .nl{display:block}nav .nl a{margin-left:19px}}
+ @media(min-width:1160px){nav{padding:18px 40px}nav .lg{font-size:17px;letter-spacing:5px}nav .nl a{margin-left:26px}}
  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.pulse,.scrollcue,.scar .dot{animation:none}.herovid{display:none}}
  /* ============ AWARD MOTION LAYER ============ */
  [data-count]{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
@@ -226,7 +229,7 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
 <body>
 <nav id="nav">
   <a class="lg" href="#" translate="no">PORTRAIT&nbsp;REALISM&nbsp;ACADEMY</a>
-  <div class="nl"><a href="#problem">The problem</a><a href="#proof">Proof</a><a href="#method">Method</a><a href="#instructor">Instructor</a><a href="#pricing">Investment</a></div>
+  <div class="nl"><a href="#problem">Problem</a><a href="#proof">Proof</a><a href="#method">Method</a><a href="#instructor">Instructor</a><a href="#pricing">Pricing</a></div>
   <a class="ap" href="#apply">Apply</a>
 </nav>
 
@@ -603,7 +606,7 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
     sizeCanvas();
     var px=innerWidth/2,py=innerHeight/2,cx=px,cy=py,lastX=px,lastY=py;
     var trail=[],TRAIL_MAX=48,LIFE=420,canvasDirty=false,visible=false,running=false,raf=0;
-    var MAG_SEL='.btn.p:not([type=submit]), nav .ap';
+    var MAG_SEL='.btn.p:not([type=submit])';
     var magnets=[].map.call(document.querySelectorAll(MAG_SEL),function(el){return{el:el,mx:0,my:0,R:0,ox:0,oy:0,on:false,hot:false,lift:el.classList.contains('btn')?3:0};});
     var needMeasure=false;
     function measure(){for(var i=0;i<magnets.length;i++){var m=magnets[i],r=m.el.getBoundingClientRect();m.mx=r.left+r.width/2;m.my=r.top+r.height/2;m.R=Math.max(r.width,r.height)*0.75+55;}}
