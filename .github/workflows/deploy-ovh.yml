@@ -1,0 +1,34 @@
+name: Deploy to OVH
+# GitHub (fabbrica) -> OVH (server). Dormiente finché non imposti la variabile OVH_ENABLED=true
+# e i secrets: OVH_HOST, OVH_USER, OVH_SSH_KEY (chiave privata), OVH_PATH (es. /var/www/academy).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-ovh
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: vars.OVH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy static site to OVH via rsync/ssh
+        env:
+          OVH_HOST: ${{ secrets.OVH_HOST }}
+          OVH_USER: ${{ secrets.OVH_USER }}
+          OVH_SSH_KEY: ${{ secrets.OVH_SSH_KEY }}
+          OVH_PATH: ${{ secrets.OVH_PATH }}
+        run: |
+          set -e
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$OVH_SSH_KEY" > ~/.ssh/deploy && chmod 600 ~/.ssh/deploy
+          ssh-keyscan -H "$OVH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          rsync -az --delete \
+            --exclude '.git' --exclude '.github' --exclude 'README.md' \
+            -e "ssh -i ~/.ssh/deploy -o StrictHostKeyChecking=accept-new" \
+            ./ "$OVH_USER@$OVH_HOST:$OVH_PATH/"
+          ssh -i ~/.ssh/deploy "$OVH_USER@$OVH_HOST" "command -v chown >/dev/null && sudo chown -R www-data:www-data $OVH_PATH || true"
