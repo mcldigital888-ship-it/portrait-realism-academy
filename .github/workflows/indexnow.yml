@@ -1,0 +1,27 @@
+name: IndexNow
+on:
+  push:
+    branches: [ main ]
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Submit changed URLs to IndexNow
+        run: |
+          KEY="96e7fa13d87223ec13fe5f52a3a149a1"
+          HOST="portraitrealismacademy.com"
+          CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -E '\.html$' || true)
+          URLS=$(for f in $CHANGED; do
+            d=$(dirname "$f")
+            if [ "$(basename $f)" = "index.html" ]; then
+              if [ "$d" = "." ]; then echo "https://$HOST/"; else echo "https://$HOST/$d/"; fi
+            else echo "https://$HOST/$f"; fi
+          done | sort -u)
+          if [ -z "$URLS" ]; then echo "no html changes"; exit 0; fi
+          LIST=$(echo "$URLS" | awk 'BEGIN{ORS=""}{printf "%s\"%s\"",(NR>1?",":""),$0}')
+          BODY="{\"host\":\"$HOST\",\"key\":\"$KEY\",\"keyLocation\":\"https://$HOST/$KEY.txt\",\"urlList\":[$LIST]}"
+          echo "$BODY"
+          curl -sS -X POST "https://api.indexnow.org/indexnow" -H "Content-Type: application/json" -d "$BODY" -w "\nHTTP %{http_code}\n"
