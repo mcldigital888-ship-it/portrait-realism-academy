@@ -177,6 +177,8 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.pulse,.scrollcue,.scar .dot{animation:none}.herovid{display:none}}
  /* ============ AWARD MOTION LAYER ============ */
  [data-count]{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+ .pay{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+ .paynote{font-size:12px;color:var(--mut);margin-top:12px;text-align:center}
  .rv{transform:translateY(18px);transition:opacity .55s,transform .55s cubic-bezier(.2,.7,.2,1)}
  /* scroll progress (thin bronze) */
  .prog{position:fixed;top:0;left:0;height:2px;width:100%;z-index:70;background:linear-gradient(90deg,var(--acc),#e7cfa8);transform:scaleX(0);transform-origin:0 50%;will-change:transform;pointer-events:none}
@@ -357,8 +359,12 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
       <span><span class="k">✓</span> Catering included</span>
       <span><span class="k">✓</span> You bring only your machine</span>
     </div>
-    <p class="rl" style="margin-top:22px"><b>$500 deposit</b> reserves your seat — the balance can be split into installments before the class. Your deposit is protected: fully refundable if the Academy is cancelled by the organization.</p>
-    <div class="cta" style="justify-content:center"><a class="btn p pulse" href="#apply">Reserve my seat</a></div>
+    <p class="rl" style="margin-top:22px"><b>$500 deposit</b> reserves your seat — pay the balance in <b>flexible installments</b> before the class. Your deposit is protected: fully refundable if the Academy is cancelled by the organization.</p>
+    <div class="pay">
+      <a class="btn p pulse" href="#apply" data-pay="deposit">Reserve your seat — $500 deposit</a>
+      <a class="btn g" href="#apply" data-pay="installments">Pay in installments</a>
+    </div>
+    <p class="paynote">Secure checkout by Stripe · flexible payment plans available at checkout.</p>
   </div>
 </div></section>
 
@@ -735,6 +741,21 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
   btn.addEventListener('pointerdown',function(e){e.stopPropagation();});   // don't move the slider when tapping the speaker
   btn.addEventListener('click',function(e){e.stopPropagation();muted=!muted;btn.textContent=muted?'🔇':'🔊';btn.classList.toggle('muted',muted);btn.setAttribute('aria-label',muted?'Sound off — tap to enable':'Sound on — tap to mute');if(muted)end();});
  }
+})();
+</script>
+
+<!-- Payment CTAs — paste Stripe Payment Link URLs below when Federico's Stripe (US) is live -->
+<script>
+(function(){
+ var STRIPE={ deposit:'', installments:'' };   // e.g. deposit:'https://buy.stripe.com/xxx', installments:'https://buy.stripe.com/yyy'
+ var pid=(typeof FB_PIXEL_ID!=='undefined')?FB_PIXEL_ID:'';
+ [].forEach.call(document.querySelectorAll('[data-pay]'),function(a){
+  var url=STRIPE[a.getAttribute('data-pay')];
+  if(url){ a.href=url; a.target='_blank'; a.rel='noopener';
+   a.addEventListener('click',function(){ if(window.fbq&&pid&&pid.indexOf('_')<0)fbq('track','InitiateCheckout',{content_name:'academy-'+a.getAttribute('data-pay')}); });
+  }
+  // else: href stays "#apply" → smooth-scrolls to the application form (no dead button)
+ });
 })();
 </script>
 </body></html>
