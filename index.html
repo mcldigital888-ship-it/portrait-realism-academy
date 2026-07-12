@@ -761,22 +761,19 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
 (function(){
  var cmp=document.getElementById('cmp');if(!cmp)return;
  var btn=document.getElementById('cmpMute');
- var muted=false, ac=null, master=null, moveT=null, down=false;
+ var muted=false, ac=null, master=null, src=null, moveT=null, down=false;
  function build(){
   var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;
   ac=new AC();
-  master=ac.createGain();master.gain.value=0;
-  var lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1650;lp.Q.value=0.6;
-  var o1=ac.createOscillator();o1.type='sawtooth';o1.frequency.value=103;
-  var o2=ac.createOscillator();o2.type='square';o2.frequency.value=207;var g2=ac.createGain();g2.gain.value=0.35;
-  // mechanical flutter on the fundamental
-  var lfo=ac.createOscillator();lfo.type='sine';lfo.frequency.value=7.5;var lg=ac.createGain();lg.gain.value=13;lfo.connect(lg);lg.connect(o1.frequency);
-  o1.connect(lp);o2.connect(g2);g2.connect(lp);lp.connect(master);master.connect(ac.destination);
-  o1.start();o2.start();lfo.start();
+  master=ac.createGain();master.gain.value=0;master.connect(ac.destination);
+  // REAL tattoo-machine recording, looped gaplessly via Web Audio buffer
+  fetch('assets/audio/tattoo-machine.mp3').then(function(r){return r.arrayBuffer();}).then(function(ab){return ac.decodeAudioData(ab);}).then(function(buf){
+    src=ac.createBufferSource();src.buffer=buf;src.loop=true;src.loopStart=0.12;src.loopEnd=Math.max(0.6,buf.duration-0.1);src.connect(master);src.start();
+  }).catch(function(){});
   return true;
  }
  function ensure(){ if(!ac){ if(!build())return; } if(ac.state==='suspended')ac.resume(); }
- function buzz(on){ if(!ac)return; var t=ac.currentTime; master.gain.cancelScheduledValues(t); master.gain.setTargetAtTime(on?0.055:0.0, t, on?0.012:0.045); }
+ function buzz(on){ if(!ac)return; var t=ac.currentTime; master.gain.cancelScheduledValues(t); master.gain.setTargetAtTime(on?0.5:0.0, t, on?0.015:0.05); }
  function moving(){ if(muted)return; ensure(); buzz(true); clearTimeout(moveT); moveT=setTimeout(function(){buzz(false);},140); }  // stops when you stop moving
  function end(){ down=false; clearTimeout(moveT); buzz(false); }
  cmp.addEventListener('pointerdown',function(e){ if(btn&&(e.target===btn||btn.contains(e.target)))return; down=true; moving(); });
