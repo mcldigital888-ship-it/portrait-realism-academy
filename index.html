@@ -126,6 +126,12 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
  /* scarcity */
  .scarc{text-align:center}
  .scarc .num{font-family:'Fraunces',serif;font-size:clamp(56px,12vw,120px);color:var(--acc);line-height:.9}
+ .seat-blink{animation:seatblink 1.5s ease-in-out infinite}
+ @keyframes seatblink{0%,100%{opacity:1}52%{opacity:.4}}
+ .seat-pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--tech);font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:#eaa588;border:1px solid rgba(201,142,120,.45);border-radius:20px;padding:5px 13px;background:rgba(201,142,120,.09)}
+ .seat-pill b{color:#fff;font-weight:600}
+ .scarc .num.low{color:var(--red)}
+ .scarc .sub10{font-family:var(--tech);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-top:8px}
  .scarc .lead{margin-left:auto;margin-right:auto;text-align:center}
  /* faq */
  .faqs{margin-top:30px;max-width:820px}
@@ -266,7 +272,7 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
     <h1>Stop hoping your portraits heal well.<span class="it">Master the system that makes them last.</span></h1>
     <p class="sub">The 3-day grey-wash masterclass with <b translate="no">Federico Galliani</b> — "Portrait KID". The method that takes you from intermediate to the top tier of black &amp; grey realism.</p>
     <div class="cta"><a class="btn p pulse" href="#apply">Claim one of the 10 seats</a><a class="btn g" href="#proof">See the proof</a></div>
-    <div class="scar"><span class="dot"></span> Only <b style="color:#fff">10 seats</b> — on Day 3 you tattoo real skin with Federico at your elbow.</div>
+    <div class="scar"><span class="seat-pill seat-blink"><span class="dot" style="position:static;box-shadow:none"></span> <b class="js-seatsleft">8</b>&nbsp;of 10 seats left</span> <span style="color:var(--mut)">· Day 3 you tattoo real skin, Federico at your elbow.</span></div>
     <div class="cd" id="cd"></div>
   </div>
   <div class="scrollcue">↓</div>
@@ -399,8 +405,9 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
 
 <!-- SCARCITY -->
 <section class="s scarc" style="padding-top:0"><div class="wrap">
-  <div class="num rv" data-count data-to="10">10</div>
-  <div class="eyebrow rv" style="margin-top:10px">Seats — and not one more</div>
+  <div class="num rv seat-blink" id="seatsBig"><span class="js-seatsleft">8</span></div>
+  <div class="sub10 rv">seats still open · of 10</div>
+  <div class="eyebrow rv" style="margin-top:10px">And not one more</div>
   <h2 class="rv">Why only ten?</h2>
   <p class="lead rv">Because on Day 3 Federico is <b>physically next to you</b> while you tattoo real skin — correcting your dilution, your angle, your pressure. That kind of one-on-one can't scale to a room of fifty. Ten seats isn't marketing. It's the physical limit of a real apprenticeship. When they're gone, they're gone.</p>
   <div class="cta rv" style="justify-content:center;margin-top:26px"><a class="btn p pulse" href="#apply">Apply before the seats are gone</a></div>
@@ -461,7 +468,7 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
 
 <!-- sticky CTA bar -->
 <div class="sticky" id="sticky"><div class="sbin">
-  <div class="sbtxt"><b translate="no">Portrait Realism Academy</b><span>Milwaukee · Oct 6–8 · 10 seats only</span></div>
+  <div class="sbtxt"><b translate="no">Portrait Realism Academy</b><span>Milwaukee · Oct 6–8 · <span class="js-seatsleft seat-blink" style="color:#eaa588;font-weight:600">8</span> of 10 left</span></div>
   <div class="sbcd" id="sbcd"></div>
   <a class="btn p" href="#apply">Apply now</a>
 </div></div>
@@ -845,6 +852,15 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
  document.addEventListener('visibilitychange',function(){if(document.hidden)fade(false);else if(unlocked)apply();});
  btn.addEventListener('click',function(){muted=!muted;try{localStorage.setItem('prm_snd',muted?'off':'on');}catch(e){}if(!unlocked){unlocked=true;if(!ac)build();}apply();});
  btn.classList.toggle('off',muted);
+})();
+</script>
+<!-- SEATS LEFT — set to the REAL number still available (keep it truthful). Auto-wires to Stripe deposits when payments go live. -->
+<script>
+(function(){
+ var SEATS_LEFT = 8;   /* 10 total · 2 reserved. Update as real bookings land (or wire to Stripe). */
+ var n = Math.max(0, SEATS_LEFT);
+ [].forEach.call(document.querySelectorAll('.js-seatsleft'), function(el){ el.textContent = n; });
+ var big = document.getElementById('seatsBig'); if (big && n <= 3) big.classList.add('low');
 })();
 </script>
 </body></html>
