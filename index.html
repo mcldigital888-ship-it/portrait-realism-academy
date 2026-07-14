@@ -401,12 +401,12 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
       <span><span class="k">✓</span> Catering included</span>
       <span><span class="k">✓</span> You bring only your machine</span>
     </div>
-    <p class="rl" style="margin-top:22px"><b>$500 deposit</b> reserves your seat — pay the balance in <b>flexible installments</b> before the class. Your deposit is protected: fully refundable if the Academy is cancelled by the organization.</p>
+    <p class="rl" style="margin-top:22px"><b>$500</b> reserves your seat. The <b>$1,500 balance</b> is due one month before the class — by <b>Sept 6, 2026</b> (we send you a secure link). Prefer to settle it all now? Pay in full below. Your deposit is protected: fully refundable if the Academy is cancelled by the organization.</p>
     <div class="pay">
       <a class="btn p pulse" href="#apply" data-pay="deposit">Reserve your seat — $500 deposit</a>
-      <a class="btn g" href="#apply" data-pay="installments">Pay in installments</a>
+      <a class="btn g" href="#apply" data-pay="installments">Pay in full — $2,000</a>
     </div>
-    <p class="paynote">Secure checkout by Stripe · flexible payment plans available at checkout.</p>
+    <p class="paynote">Secure checkout by Stripe · $500 now, $1,500 one month before the class.</p>
   </div>
 </div></section>
 
@@ -426,7 +426,7 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
   <h2 class="rv">Good to know.</h2>
   <div class="faqs rv">
     <details><summary>Who is this masterclass for?</summary><p>Working tattoo artists at an intermediate or advanced level who want to specialize in black &amp; grey portrait realism. It is taught in English.</p></details>
-    <details><summary>How much is it and how do I reserve a seat?</summary><p>Tuition is $2,000. A $500 deposit reserves one of the 10 seats; the remaining balance can be paid in installments before the class. Apply through the form below and you'll receive the deposit link.</p></details>
+    <details><summary>How much is it and how do I reserve a seat?</summary><p>Tuition is $2,000. A <b>$500 deposit</b> reserves one of the 10 seats; the <b>$1,500 balance</b> is due one month before the class (by Sept 6, 2026) — we send you a secure link. You can also pay in full at any time. Apply or reserve directly above.</p></details>
     <details><summary>What do I need to bring?</summary><p>Only your own tattoo machine. Every student gets a full workstation, all working materials and ink supplied for the class.</p></details>
     <details><summary>Will there be real models to tattoo?</summary><p>Yes. On Day 3 you tattoo a real model under Federico's supervision. Models are provided by the host studio, SOL Studios.</p></details>
     <details><summary>Do I get a certificate?</summary><p>Yes — a certificate of completion is issued at the end of the three days.</p></details>
@@ -488,7 +488,7 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
 {"@type":"Course","name":"Portrait Realism Academy by Federico Galliani","description":"A 3-day hands-on black & grey portrait realism tattoo masterclass: theory, live demo and supervised practice on real models. Intermediate and advanced artists.","image":["https://portraitrealismacademy.com/assets/portfolio/hero-old-man.webp","https://portraitrealismacademy.com/assets/portfolio/hiphop-nyc-portrait.webp","https://portraitrealismacademy.com/assets/portfolio/greek-statue-backpiece.webp"],"inLanguage":"en","provider":{"@id":"https://portraitrealismacademy.com/#federico"},"educationalLevel":"Intermediate to advanced","hasCourseInstance":{"@type":"CourseInstance","courseMode":"in-person","location":{"@type":"Place","name":"SOL Studios","address":{"@type":"PostalAddress","streetAddress":"11000 W Janesville Rd","addressLocality":"Hales Corners","addressRegion":"WI","postalCode":"53130","addressCountry":"US"}},"startDate":"2026-10-06","endDate":"2026-10-08","instructor":{"@id":"https://portraitrealismacademy.com/#federico"},"maximumAttendeeCapacity":10,"offers":{"@type":"Offer","price":"2000","priceCurrency":"USD","availability":"https://schema.org/LimitedAvailability"}}},
 {"@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Who is this masterclass for?","acceptedAnswer":{"@type":"Answer","text":"Working tattoo artists at an intermediate or advanced level who want to specialize in black & grey portrait realism. Taught in English."}},
-{"@type":"Question","name":"How much is it and how do I reserve a seat?","acceptedAnswer":{"@type":"Answer","text":"Tuition is $2,000. A $500 deposit reserves one of the 10 seats; the balance can be paid in installments before the class."}},
+{"@type":"Question","name":"How much is it and how do I reserve a seat?","acceptedAnswer":{"@type":"Answer","text":"Tuition is $2,000. A $500 deposit reserves one of the 10 seats; the $1,500 balance is due one month before the class (by September 6, 2026). You can also pay in full at any time."}},
 {"@type":"Question","name":"What do I need to bring?","acceptedAnswer":{"@type":"Answer","text":"Only your own tattoo machine. Every student gets a full workstation, all materials and ink supplied for the class."}},
 {"@type":"Question","name":"Will there be real models to tattoo?","acceptedAnswer":{"@type":"Answer","text":"Yes. On Day 3 you tattoo a real model, provided by the host studio SOL Studios, under Federico's supervision."}},
 {"@type":"Question","name":"What is the refund policy?","acceptedAnswer":{"@type":"Answer","text":"The deposit is non-refundable except in cases of force majeure. If the Academy is cancelled by the organization, you receive a full refund."}}
@@ -535,7 +535,7 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
  cmp.addEventListener('pointercancel',function(){drag=false;});
  // form
  var f=document.getElementById('bf');
- f.addEventListener('submit',function(e){e.preventDefault();var d=new FormData(f);d.append('_subject','New Academy application — '+f.first.value+' '+f.last.value);d.append('_template','table');d.append('_captcha','false');var b=f.querySelector('button');b.disabled=true;b.textContent='Sending…';
+ f.addEventListener('submit',function(e){e.preventDefault();var d=new FormData(f);d.append('_subject','New Academy application — '+f.first.value+' '+f.last.value);d.append('_template','table');d.append('_captcha','false');d.append('_autoresponse','Hi '+f.first.value+', thanks for applying to the Portrait Realism Academy by Federico Galliani (Milwaukee, Oct 6-8, 2026). We received your application and will reply personally within 48 hours with availability and your $500 reservation link. Seats are limited to 10. — Team Federico Galliani');var b=f.querySelector('button');b.disabled=true;b.textContent='Sending…';
   fetch('https://formsubmit.co/ajax/marcoetingcrd@gmail.com',{method:'POST',headers:{'Accept':'application/json'},body:d}).then(function(r){return r.json();}).then(function(){document.getElementById('ok').style.display='block';f.reset();b.textContent='Sent ✓';if(window.fbq&&FB_PIXEL_ID.indexOf('_')<0)fbq('track','Lead',{content_name:'academy-application'});}).catch(function(){b.disabled=false;b.textContent='Submit application';window.location.href='mailto:marcoetingcrd@gmail.com?subject=Academy%20application';});
  });
 })();
