@@ -798,7 +798,7 @@ var FB_PIXEL_ID='3030091367151821';if(FB_PIXEL_ID&&FB_PIXEL_ID.indexOf('_')<0){f
 <!-- Payment CTAs — paste Stripe Payment Link URLs below when Federico's Stripe (US) is live -->
 <script>
 (function(){
- var STRIPE={ deposit:'', installments:'' };   // e.g. deposit:'https://buy.stripe.com/xxx', installments:'https://buy.stripe.com/yyy'
+ var STRIPE={ deposit:'https://buy.stripe.com/test_6oUdR134v0rHeQbeEsdMI00', installments:'https://buy.stripe.com/test_4gM28j34v5M14bxdAodMI01' };   /* TEST links — swap for LIVE when the account is activated */
  var pid=(typeof FB_PIXEL_ID!=='undefined')?FB_PIXEL_ID:'';
  [].forEach.call(document.querySelectorAll('[data-pay]'),function(a){
   var url=STRIPE[a.getAttribute('data-pay')];
