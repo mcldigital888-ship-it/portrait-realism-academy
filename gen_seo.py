@@ -139,7 +139,7 @@ body=f"""
 <li><b>Global Tattoo Magazine</b> (2019)</li>
 <li><b>Ink People</b> — Polish tattoo magazine, cover (2022)</li>
 <li><b>iNKPPL</b> — "Ink, Passion and Patience" (2024)</li>
-<li>Sponsored by <b>Radiant Colors</b></li>
+<li>Sponsored by <b>Eclipse Tattoo Ink</b></li>
 </ul>
 <p>He speaks English and Italian. See his portfolio on Instagram <a href="https://www.instagram.com/federicogallianitattoo/">@federicogallianitattoo</a>.</p>
 {CTA}
