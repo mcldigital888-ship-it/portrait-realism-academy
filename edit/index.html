@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="it"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Editor pagina — Portrait Realism Academy</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+ *{box-sizing:border-box}
+ html,body{margin:0;height:100%;font-family:-apple-system,system-ui,'Segoe UI',sans-serif;background:#111}
+ #bar{position:fixed;top:0;left:0;right:0;height:64px;z-index:10;display:flex;align-items:center;justify-content:space-between;
+   gap:14px;padding:0 16px;background:#17130a;border-bottom:1px solid #3a3320;color:#eae7e1}
+ .note{font-size:13px;line-height:1.35;color:#e7cfa8}
+ .note b{color:#fff}.note span{color:#b9b3a3}
+ .btns{display:flex;gap:8px;flex:none;align-items:center}
+ button{font:inherit;font-size:13px;padding:9px 15px;border-radius:7px;border:1px solid #4a4227;background:#221c10;color:#eae7e1;cursor:pointer}
+ button:hover{border-color:#c2a878}
+ button.primary{background:#c2a878;color:#171308;border-color:#c2a878;font-weight:700}
+ button.primary:hover{filter:brightness(1.06)}
+ #status{font-size:12px;color:#8c8a86;margin-right:6px}
+ #frame{position:absolute;top:64px;left:0;right:0;bottom:0;width:100%;height:calc(100% - 64px);border:0;background:#0b0b0d}
+ #load{position:fixed;inset:64px 0 0 0;display:flex;align-items:center;justify-content:center;color:#8c8a86;font-size:14px;background:#0b0b0d;z-index:5}
+ @media(max-width:720px){.note span{display:none}#bar{height:74px}}
+</style>
+</head><body>
+<div id="bar">
+  <div class="note">✏️ <b>Editor</b> — clicca qualsiasi testo e riscrivilo. <span>È la pagina vera del sito. Quando hai finito premi «Salva pagina»: scarica l'index.html aggiornato da mandarmi (lo pubblico io).</span></div>
+  <div class="btns"><span id="status"></span>
+    <button id="reload">↺ Ricarica dal sito</button>
+    <button id="save" class="primary">⤓ Salva pagina</button>
+  </div>
+</div>
+<div id="load">Carico la pagina dal sito…</div>
+<iframe id="frame" title="Anteprima editabile del sito"></iframe>
+<script>
+(function(){
+  var SRC='/index.html';
+  var frame=document.getElementById('frame');
+  var status=document.getElementById('status');
+  var loadMsg=document.getElementById('load');
+  var EDIT_STYLE_ID='__editor_style__';
+
+  function loadPage(){
+    loadMsg.style.display='flex'; loadMsg.textContent='Carico la pagina dal sito…';
+    fetch(SRC,{cache:'no-store'}).then(function(r){return r.text();}).then(function(html){
+      var doc=new DOMParser().parseFromString(html,'text/html');
+      // block scripts so the static render is clean + editable (cursor/video/dotwork won't interfere while editing)
+      [].forEach.call(doc.querySelectorAll('script'),function(s){
+        s.setAttribute('data-orig-type', s.getAttribute('type')||'');
+        s.setAttribute('type','javascript/blocked');
+      });
+      doc.body.setAttribute('contenteditable','true');
+      doc.body.setAttribute('spellcheck','false');
+      var st=doc.createElement('style'); st.id=EDIT_STYLE_ID;
+      st.textContent='html,body{cursor:text!important}[contenteditable] *{cursor:text!important}'+
+        '[contenteditable] h1:hover,[contenteditable] h2:hover,[contenteditable] h3:hover,[contenteditable] p:hover,[contenteditable] span:hover,[contenteditable] a:hover,[contenteditable] li:hover,[contenteditable] summary:hover{outline:1px dashed rgba(194,168,120,.5);outline-offset:2px}'+
+        '[contenteditable]:focus{outline:1px solid rgba(194,168,120,.7)}';
+      doc.head.appendChild(st);
+      frame.srcdoc='<!DOCTYPE html>'+doc.documentElement.outerHTML;
+      frame.onload=function(){loadMsg.style.display='none';status.textContent='pronta — clicca un testo';};
+    }).catch(function(e){loadMsg.textContent='Errore nel caricare la pagina: '+e;});
+  }
+
+  function buildFinalHTML(){
+    var d=frame.contentDocument;
+    var root=d.documentElement.cloneNode(true);
+    var body=root.querySelector('body');
+    body.removeAttribute('contenteditable'); body.removeAttribute('spellcheck');
+    var es=root.querySelector('#'+EDIT_STYLE_ID); if(es) es.remove();
+    [].forEach.call(root.querySelectorAll('script'),function(s){
+      var t=s.getAttribute('data-orig-type');
+      if(t){s.setAttribute('type',t);} else {s.removeAttribute('type');}
+      s.removeAttribute('data-orig-type');
+    });
+    return '<!DOCTYPE html>\n'+root.outerHTML+'\n';
+  }
+
+  function download(name,text){
+    var b=new Blob([text],{type:'text/html;charset=utf-8'});
+    var u=URL.createObjectURL(b);
+    var a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(function(){URL.revokeObjectURL(u);},1500);
+  }
+
+  document.getElementById('reload').onclick=function(){ if(confirm('Ricaricare dal sito e perdere le modifiche non salvate?')) loadPage(); };
+  document.getElementById('save').onclick=function(){
+    try{ download('index.html', buildFinalHTML()); status.textContent='salvato ✓ (index.html scaricato)'; }
+    catch(e){ status.textContent='errore: '+e; }
+  };
+  loadPage();
+})();
+</script>
+</body></html>

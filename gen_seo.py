@@ -338,7 +338,7 @@ page("thanks",
 urls=[("/","2026-10-01","1.0")]+pages_built
 sm=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
 for loc,lm,pr in urls:
-    sm.append(f"<url><loc>{SITE}{loc}</loc><lastmod>{lm}</lastmod><priority>{pr}</priority></url>")
+    sm.append(f"<url><loc>{SITE}/{loc.lstrip('/')}</loc><lastmod>{lm}</lastmod><priority>{pr}</priority></url>")
 sm.append("</urlset>")
 open(os.path.join(os.path.dirname(__file__),"sitemap.xml"),"w").write("\n".join(sm))
 print("Built pages:",[u for u,_,_ in urls])
