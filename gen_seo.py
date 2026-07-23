@@ -78,7 +78,7 @@ FOOT_LINKS = [
  ("/black-and-grey-portrait-realism/","The craft"),("/grey-wash-longevity/","Grey wash that heals"),
  ("/milwaukee-tattoo-arts-convention-2026/","Convention weekend"),
  ("/chicago-portrait-realism-masterclass/","From Chicago"),("/madison-portrait-realism-masterclass/","From Madison"),
- ("/minneapolis-portrait-realism-masterclass/","From Minneapolis"),("/apply/","Apply"),
+ ("/minneapolis-portrait-realism-masterclass/","From Minneapolis"),("/apply/","Apply"),("/privacy/","Privacy"),
 ]
 
 def page(slug,title,desc,kicker,h1,body,graph,noindex=False):
@@ -95,7 +95,7 @@ def page(slug,title,desc,kicker,h1,body,graph,noindex=False):
 <meta name="geo.region" content="US-WI">
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}">
 <meta property="og:type" content="website"><meta property="og:url" content="{canon}">
-<meta property="og:image" content="{SITE}/assets/portfolio/hiphop-nyc-portrait.webp">
+<meta property="og:image" content="{SITE}/assets/og-academy.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{SITE}/assets/og-academy.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>{CSS}</style>
@@ -117,7 +117,7 @@ def page(slug,title,desc,kicker,h1,body,graph,noindex=False):
     open(os.path.join(d,"index.html"),"w").write(html)
     return canon
 
-CTA='<p><a class="cta" href="/apply/">Claim one of the 10 seats →</a></p>'
+CTA='<p><a class="cta" href="/apply/">Claim one of the 10 spots →</a></p>'
 pages_built=[]
 
 # 1) INSTRUCTOR ENTITY
@@ -166,7 +166,7 @@ body=f"""
 <h3>Day 3 — Supervised practice</h3>
 <p>You work under Federico's direct supervision, with real-time feedback on your dilution, needle angle and pressure. This hands-on day is the difference between a seminar you <em>watch</em> and a masterclass you <em>execute</em>.</p>
 <h2>Who it's for</h2>
-<p>Intermediate and advanced tattoo artists who already tattoo and want to specialize in black &amp; grey portrait realism. Taught in English. Ten seats only.</p>
+<p>Intermediate and advanced tattoo artists who already tattoo and want to specialize in black &amp; grey portrait realism. Taught in English. Ten spots only.</p>
 <h2>Questions artists ask</h2>
 <details><summary>What needles and machines does portrait realism use?</summary><p>Mostly magnum and bugpin configurations for smooth shading, with a disciplined shading order. Day 1 covers setup in detail; you bring your own machine.</p></details>
 <details><summary>What is grey wash?</summary><p>Grey made by diluting black ink with water rather than using pre-mixed grey ink — it gives smoother, more controllable transitions and, mixed correctly, ages better. See <a href="/grey-wash-longevity/">grey wash that heals</a>.</p></details>
@@ -182,7 +182,7 @@ page("black-and-grey-portrait-realism",
   crumb(SITE+"/black-and-grey-portrait-realism/","Black & grey portrait realism"),
   {"@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"What is grey wash in tattooing?","acceptedAnswer":{"@type":"Answer","text":"Grey wash is grey made by diluting black ink with water rather than using pre-mixed grey ink, giving smoother transitions that, mixed correctly, age better."}},
-    {"@type":"Question","name":"Who is the black & grey portrait realism masterclass for?","acceptedAnswer":{"@type":"Answer","text":"Intermediate and advanced tattoo artists who want to specialize in black & grey portrait realism. Taught in English, 10 seats."}}]}])
+    {"@type":"Question","name":"Who is the black & grey portrait realism masterclass for?","acceptedAnswer":{"@type":"Answer","text":"Intermediate and advanced tattoo artists who want to specialize in black & grey portrait realism. Taught in English, 10 spots."}}]}])
 pages_built.append(("black-and-grey-portrait-realism/","2026-10-01","0.7"))
 
 # 3) GREY WASH LONGEVITY — citation bait
@@ -226,7 +226,7 @@ body=f"""
 <p class="lead">The Portrait Realism Academy runs <b>October 6–8, 2026</b> in the Milwaukee area — the days right before the <b>Milwaukee Tattoo Arts Convention</b> (Villain Arts), October 9–11, 2026 at the Baird Center. Learn first, then work the floor.</p>
 <div class="card">
 <h3>The masterclass — Oct 6–8</h3>
-<p>3 days, 10 seats, black &amp; grey portrait realism with Federico Galliani at SOL Studios, Hales Corners (SW Milwaukee metro). <a href="/">Details &amp; apply →</a></p>
+<p>3 days, 10 spots, black &amp; grey portrait realism with Federico Galliani at SOL Studios, Hales Corners (SW Milwaukee metro). <a href="/">Details &amp; apply →</a></p>
 </div>
 <div class="card">
 <h3>The convention — Oct 9–11</h3>
@@ -256,7 +256,7 @@ def geo(slug,city,h1,dist_line,scene,extra,fa):
 <div class="meta"><span>Venue: <b>SOL Studios</b>, 11000 W Janesville Rd, Hales Corners WI 53130</span></div>
 <h2>Why come from {city}</h2>
 <p>{extra} And the masterclass opens the weekend of the <a href="/milwaukee-tattoo-arts-convention-2026/">Milwaukee Tattoo Arts Convention</a> (Oct 9–11) — one trip, both.</p>
-<p>Three days, ten seats, black &amp; grey portrait realism with <a href="/federico-galliani/">Federico Galliani</a>. October 6–8, 2026.</p>
+<p>Three days, ten spots, black &amp; grey portrait realism with <a href="/federico-galliani/">Federico Galliani</a>. October 6–8, 2026.</p>
 <details><summary>{fa[0][0]}</summary><p>{fa[0][1]}</p></details>
 <details><summary>{fa[1][0]}</summary><p>{fa[1][1]}</p></details>
 {CTA}
@@ -300,7 +300,7 @@ geo("minneapolis-portrait-realism-masterclass","Minneapolis",
 
 # 8) APPLY
 body=f"""
-<p class="lead">Ten seats. $2,000. October 6–8, 2026, in the Milwaukee area. Apply below and we reply personally with availability and the deposit link.</p>
+<p class="lead">Ten spots. $2,000. October 6–8, 2026, in the Milwaukee area. Apply below and we reply personally with availability and the deposit link.</p>
 <div class="card">
 <form action="https://formsubmit.co/marcoetingcrd@gmail.com" method="POST">
 <input type="hidden" name="_subject" value="New Academy application (apply page)">
@@ -315,12 +315,12 @@ body=f"""
 <button class="cta" type="submit" style="border:0;cursor:pointer">Submit application</button>
 </form>
 </div>
-<p style="font-size:12px;color:#8c8a86">A $500 deposit confirms your seat once your application is accepted. Seats are limited to 10.</p>
+<p style="font-size:12px;color:#8c8a86">A $500 deposit confirms your spot once your application is accepted. Spots are limited to 10.</p>
 """
 page("apply",
- "Apply — Portrait Realism Academy (10 seats, Milwaukee Oct 6–8 2026)",
- "Apply for one of the 10 seats at the Portrait Realism Academy — a 3-day black & grey portrait-realism masterclass with Federico Galliani. Milwaukee, October 6–8, 2026. $2,000.",
- "Apply","Claim one of the 10 seats",body,
+ "Apply — Portrait Realism Academy (10 spots, Milwaukee Oct 6–8 2026)",
+ "Apply for one of the 10 spots at the Portrait Realism Academy — a 3-day black & grey portrait-realism masterclass with Federico Galliani. Milwaukee, October 6–8, 2026. $2,000.",
+ "Apply","Claim one of the 10 spots",body,
  [NODE_COURSE,NODE_ACADEMY,NODE_SOL,
   webpage(SITE+"/apply/","Apply for the Portrait Realism Academy","Application form for the masterclass."),
   crumb(SITE+"/apply/","Apply")])
