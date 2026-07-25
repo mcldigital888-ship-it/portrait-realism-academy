@@ -132,8 +132,8 @@ var MAP={deposit:'v-deposit',full:'v-full',tuition:'v-full',balance:'v-balance'}
 if(MAP[p]){document.getElementById('v-apply').style.display='none';document.getElementById(MAP[p]).style.display='block';document.title='Payment confirmed — Portrait Realism Academy';}
 var n=q.get('n')||'';
 if(!MAP[p]&&/^[A-Za-zÀ-ɏ' -]{2,30}$/.test(n)){document.getElementById('nm').textContent=n.charAt(0).toUpperCase()+n.slice(1)+' — '}
-/* Purchase SOLO sui redirect di pagamento veri (mai su t=apply) */
-if(window.fbq&&MAP[p]){var v=(p==='full'||p==='tuition')?2000:(p==='balance'?1500:500);fbq('track','Purchase',{value:v,currency:'USD',content_name:'academy-'+p});}
+/* Purchase: NON piu' client-side qui (chiunque visiti questa URL con ?t=deposit la faceva scattare anche senza pagare davvero,
+   sporcando l'ottimizzazione Meta). L'evento Purchase vero parte SOLO server-side dal webhook Stripe verificato (academy_api.py). */
 /* Lead: UNICO punto di fuoco — tutte le application (form home e /apply/) atterrano qui; guardia anti-doppioni */
 if(window.fbq&&p==='apply'){try{if(!localStorage.getItem('acad_lead')){fbq('track','Lead',{content_name:'academy-application'});localStorage.setItem('acad_lead','1');}}catch(e2){fbq('track','Lead',{content_name:'academy-application'});}}
 if(window.fbq){[].forEach.call(document.querySelectorAll('[data-ev]'),function(a){a.addEventListener('click',function(){fbq('track','InitiateCheckout',{content_name:'academy-'+a.getAttribute('data-ev')})})})}
