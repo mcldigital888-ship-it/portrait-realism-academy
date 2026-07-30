@@ -134,8 +134,12 @@ var n=q.get('n')||'';
 if(!MAP[p]&&/^[A-Za-zÀ-ɏ' -]{2,30}$/.test(n)){document.getElementById('nm').textContent=n.charAt(0).toUpperCase()+n.slice(1)+' — '}
 /* Purchase: NON piu' client-side qui (chiunque visiti questa URL con ?t=deposit la faceva scattare anche senza pagare davvero,
    sporcando l'ottimizzazione Meta). L'evento Purchase vero parte SOLO server-side dal webhook Stripe verificato (academy_api.py). */
-/* Lead: UNICO punto di fuoco — tutte le application (form home e /apply/) atterrano qui; guardia anti-doppioni */
-if(window.fbq&&p==='apply'){try{if(!localStorage.getItem('acad_lead')){fbq('track','Lead',{content_name:'academy-application'});localStorage.setItem('acad_lead','1');}}catch(e2){fbq('track','Lead',{content_name:'academy-application'});}}
+/* Lead: UNICO punto di fuoco — eventID condiviso col server (/api/apply → CAPI) = Meta deduplica browser+server in 1 solo lead; guardia anti-doppioni */
+if(window.fbq&&p==='apply'){
+  var eid=q.get('eid')||'';
+  var fire=function(){ if(eid){fbq('track','Lead',{content_name:'academy-application'},{eventID:eid});} else {fbq('track','Lead',{content_name:'academy-application'});} };
+  try{if(!localStorage.getItem('acad_lead')){fire();localStorage.setItem('acad_lead','1');}}catch(e2){fire();}
+}
 if(window.fbq){[].forEach.call(document.querySelectorAll('[data-ev]'),function(a){a.addEventListener('click',function(){fbq('track','InitiateCheckout',{content_name:'academy-'+a.getAttribute('data-ev')})})})}
 }catch(e){}</script>
 </body></html>
