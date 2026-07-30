@@ -279,6 +279,23 @@ loadPixel();  /* Option C: pixel fires on every load (max US signal); banner is 
 .cd b,.cd .n,.cd span:first-child{color:var(--gold2)}
 .hl b{color:var(--gold2)}
 nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
+/* — SERVIZI VISIVI (day cards con foto + liste, mantra fotografico, included grid) — */
+.day .ph{margin:-26px -26px 18px;height:180px;overflow:hidden;position:relative}
+.day .ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.72) contrast(1.06);display:block}
+.day .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0a0a0b 4%,transparent 60%)}
+.day ul.dl{list-style:none;margin:12px 0 0;padding:0;color:var(--mut);font-size:14px;position:relative;z-index:2;text-align:left}
+.day ul.dl li{margin:0 0 8px;padding-left:22px;position:relative;line-height:1.45}
+.day ul.dl li::before{content:"✓";position:absolute;left:0;color:var(--gold);font-weight:700}
+.day .out{margin-top:16px;font-size:13px;color:var(--gold2);position:relative;z-index:2;border-top:1px solid rgba(201,163,92,.25);padding-top:12px}
+#mantra .mwrap{position:relative;border-radius:16px;overflow:hidden;padding:70px 26px}
+#mantra .mwrap img.mbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.55) brightness(.32)}
+#mantra .mwrap>*{position:relative;z-index:2}
+.rrg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;text-align:left}
+.rrg .tile{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:rgba(255,255,255,.02)}
+.rrg .tile b{display:block;color:var(--bone);font-weight:600;font-size:13.5px;margin-bottom:3px}
+.rrg .tile b .k{color:var(--gold);margin-right:6px}
+.rrg .tile small{color:var(--mut);font-size:12px;line-height:1.4;display:block}
+@media(min-width:760px){.rrg{grid-template-columns:repeat(3,1fr)}}
 </style></head>
 <body>
 <nav id="nav">
@@ -312,9 +329,12 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
 
 <!-- WHY THIS MATTERS TO YOU (mantra) -->
 <section class="s" id="mantra" style="padding-top:0"><div class="wrap">
-  <div class="eyebrow rv" style="text-align:center">Why this matters to you</div>
-  <h2 class="rv" style="text-align:center">Realism isn’t a style.<br>It’s the ceiling of tattoo technique.</h2>
-  <p class="lead rv" style="text-align:center;max-width:720px;margin-left:auto;margin-right:auto">Dilution. Gradient control. Depth. Master these and every tattoo you make, in any style, gets sharper and holds up for years.<br><br>Add black &amp; grey portrait realism as your next specialty, or take the technique home to whatever you already tattoo. Either way, this is where you actually learn it.</p>
+  <div class="mwrap rv">
+    <img class="mbg" src="assets/portfolio/realistic-eye-detail.webp" alt="" loading="lazy">
+    <div class="eyebrow" style="text-align:center">Why this matters to you</div>
+    <h2 style="text-align:center">Realism isn’t a style.<br>It’s the ceiling of tattoo technique.</h2>
+    <p class="lead" style="text-align:center;max-width:720px;margin-left:auto;margin-right:auto">Dilution. Gradient control. Depth. Master these and every tattoo you make, in any style, gets sharper and holds up for years.<br><br>Add black &amp; grey portrait realism as your next specialty, or take the technique home to whatever you already tattoo. Either way, this is where you actually learn it.</p>
+  </div>
 </div></section>
 
 <!-- PROBLEM AGITATION -->
@@ -384,9 +404,32 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
   <h2 class="rv">Three days that transform the way you build portraits.</h2>
   <p class="lead rv">Not a crowded seminar where you just watch from a distance.<br>A hands-on black &amp; grey realism system, taught in English, where you learn, practice, and tattoo under Federico’s direct supervision.</p>
   <div class="days">
-    <div class="day rv d1" data-n="1"><div class="d">Day 1 · Oct 6</div><h3>THE PORTRAIT DECODE</h3><p>Everything behind a world-class black &amp; grey portrait... decoded.<br>From reference selection and value mapping to grey-wash dilution, machine setup, needle choice, and skin theory.<br>Then turn your skill into recognition:<br>portfolio strategy, tattoo photography, and content systems that help your work get seen.</p></div>
-    <div class="day rv d2" data-n="2"><div class="d">Day 2 · Oct 7</div><h3>THE REVEAL</h3><p>Federico builds a full black &amp; grey portrait live in front of you, revealing every decision behind the process, from grey-wash layering and saturation control to highlights, skin interaction, and the details that define world-class realism.</p></div>
-    <div class="day rv d3" data-n="3"><div class="d">Day 3 · Oct 8</div><h3>THE EXECUTION</h3><p>This is where the method becomes yours.<br>You, the machine, and your own portrait on fake skin, with Federico guiding every decision in real time: dilution, angle, pressure, and execution.</p></div>
+    <div class="day rv d1" data-n="1"><div class="ph"><img src="assets/portfolio/detail-zoom.webp" alt="Macro detail of a black and grey realism eye tattoo" loading="lazy"></div><div class="d">Day 1 · Oct 6</div><h3>THE PORTRAIT DECODE</h3>
+      <ul class="dl">
+        <li>Reference selection &amp; value mapping</li>
+        <li>True grey wash: black ink + water, dilution ratios</li>
+        <li>Machine setup &amp; needle choice</li>
+        <li>Skin theory — why healed results differ</li>
+        <li>Portfolio, photography &amp; content strategy</li>
+      </ul>
+      <div class="out">You leave with: the complete system, end to end.</div></div>
+    <div class="day rv d2" data-n="2"><div class="ph"><img src="assets/portfolio/instructor-federico.webp" alt="Federico Galliani tattooing a black and grey portrait" loading="lazy"></div><div class="d">Day 2 · Oct 7</div><h3>THE REVEAL</h3>
+      <ul class="dl">
+        <li>Federico tattoos a <b>live model</b> in front of you</li>
+        <li>Grey-wash layering &amp; saturation control</li>
+        <li>Highlights, skin interaction, fine details</li>
+        <li>Every decision explained as it happens</li>
+        <li>Ask questions at every stage, in real time</li>
+      </ul>
+      <div class="out">You leave with: a world-class portrait, decoded live.</div></div>
+    <div class="day rv d3" data-n="3"><div class="ph"><img src="assets/portfolio/craft-poster.webp" alt="Tattoo machine working fine black and grey shading" loading="lazy"></div><div class="d">Day 3 · Oct 8</div><h3>THE EXECUTION</h3>
+      <ul class="dl">
+        <li><b>You</b> tattoo your own portrait on synthetic skin</li>
+        <li>Federico corrects your dilution, angle &amp; pressure 1-on-1</li>
+        <li>Dedicated passes at your station, all day long</li>
+        <li>Certificate of completion at the end</li>
+      </ul>
+      <div class="out">You leave with: the method in your hands — not in your notes.</div></div>
   </div>
   <div class="hl rv"><b>Day 3 is the unfair advantage.</b> Ninety percent of tattoo seminars are marathons: the famous artist tattoos, forty people watch a monitor, ask two questions, take a certificate and leave having touched nothing. This is not a seminar you watch. It's a masterclass you <b>execute</b> — needle in your hand, the master beside you.</div>
 </div></section>
@@ -428,13 +471,13 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
   <div class="roiwrap rv d1">
     <div class="price"><span>$2,000</span> <s>/ spot</s></div>
     <p class="rl">Less than the value of a few portraits.<br><br>A complete system to master long-lasting black &amp; grey realism, elevate your results, and build a reputation around work that holds up over time.<br><br>Because the right skillset pays dividends for years.</p>
-    <div class="rr">
-      <span><span class="k">✓</span> Full workstation &amp; all materials</span>
-      <span><span class="k">✓</span> Premium ink supplied</span>
-      <span><span class="k">✓</span> Synthetic practice skin supplied</span>
-      <span><span class="k">✓</span> Certificate of completion</span>
-      <span><span class="k">✓</span> Catering included</span>
-      <span><span class="k">✓</span> You bring only your machine</span>
+    <div class="rrg">
+      <div class="tile"><b><span class="k">✓</span>Full workstation</b><small>Your station is set up and waiting — chair, lighting, all working materials.</small></div>
+      <div class="tile"><b><span class="k">✓</span>Premium ink supplied</b><small>Pro-grade blacks and grey-wash sets, provided for the whole class.</small></div>
+      <div class="tile"><b><span class="k">✓</span>Synthetic practice skin</b><small>Your Day-3 canvas — practice the method with zero stakes.</small></div>
+      <div class="tile"><b><span class="k">✓</span>Live model on Day 2</b><small>Federico tattoos a real client in front of you, provided by SOL Studios.</small></div>
+      <div class="tile"><b><span class="k">✓</span>Catering all 3 days</b><small>Lunch and coffee included — you never leave the room.</small></div>
+      <div class="tile"><b><span class="k">✓</span>Certificate of completion</b><small>Issued at the end of Day 3. You bring only your machine.</small></div>
     </div>
     <div style="border:1px solid rgba(201,163,92,.45);border-radius:10px;padding:16px 18px;margin:18px 0;text-align:left">
       <div class="eyebrow" style="margin-bottom:6px">First U.S. edition — founding cohort</div>
