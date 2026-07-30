@@ -385,7 +385,10 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
     <button class="hsnd" id="hypeSnd" type="button" aria-label="Attiva audio">🔇</button>
   </div>
 </div></section>
-<script>(function(){var v=document.getElementById('hypeVid'),b=document.getElementById('hypeSnd');if(!v||!b)return;b.addEventListener('click',function(){v.muted=!v.muted;if(!v.muted){v.play();}b.textContent=v.muted?'🔇':'🔊';});})();</script>
+<script>(function(){var v=document.getElementById('hypeVid'),b=document.getElementById('hypeSnd');if(!v||!b)return;
+b.addEventListener('click',function(){v.muted=!v.muted;if(!v.muted){v.play();}b.textContent=v.muted?'🔇':'🔊';});
+new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){v.play().catch(function(){});}else{v.pause();}});},{threshold:0.25}).observe(v);
+})();</script>
 
 <!-- PROBLEM AGITATION -->
 <section class="s agit" id="problem"><div class="wrap">
