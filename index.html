@@ -961,7 +961,7 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
  function startSeq(){if(running)return;running=true;step=0;bar=0;nextTime=ac.currentTime+0.06;scheduler();}
  function stopSeq(){running=false;if(timer){clearTimeout(timer);timer=null;}}
  function fade(on){if(!ac)return;var t=ac.currentTime;master.gain.cancelScheduledValues(t);master.gain.setTargetAtTime(on?0.24:0.0,t,on?0.35:0.25);}
- function want(){return unlocked&&!muted&&heroIn&&!document.hidden;}
+ function want(){return unlocked&&!muted&&!document.hidden;} /* musica su TUTTO il sito (ordine Marco 27/7), non solo hero */
  function apply(){
   if(!ac){btn.classList.toggle('off',muted);return;}
   if(want()){if(ac.state==='suspended')ac.resume();startSeq();fade(true);}
@@ -971,7 +971,7 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
  }
  function unlock(){if(unlocked)return;unlocked=true;if(!ac)build();apply();}
  ['scroll','pointerdown','keydown','touchstart','wheel'].forEach(function(ev){addEventListener(ev,unlock,{passive:true,once:true});});
- new IntersectionObserver(function(es){heroIn=es[0].isIntersecting;if(unlocked)apply();},{threshold:0.15}).observe(hero);
+ /* observer hero rimosso: la musica continua per tutta la pagina */
  document.addEventListener('visibilitychange',function(){if(document.hidden)fade(false);else if(unlocked)apply();});
  btn.addEventListener('click',function(){muted=!muted;try{localStorage.setItem('prm_snd',muted?'off':'on');}catch(e){}if(!unlocked){unlocked=true;if(!ac)build();}apply();});
  btn.classList.toggle('off',muted);
