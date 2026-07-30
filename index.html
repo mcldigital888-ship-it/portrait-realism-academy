@@ -302,6 +302,11 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
 .ci b{display:block;color:var(--bone);font-weight:600;font-size:14px;margin-bottom:2px}
 .ci small{color:var(--mut);font-size:12px;line-height:1.35;display:block}
 @media(min-width:760px){.curr{grid-template-columns:repeat(4,1fr)}}
+.room{position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(201,163,92,.3)}
+.room img{width:100%;height:auto;display:block;min-height:340px;object-fit:cover;filter:saturate(.8)}
+.room .roomtxt{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:26px;background:linear-gradient(0deg,rgba(5,5,6,.88) 8%,transparent 55%)}
+.room .roomtxt h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(28px,6vw,44px);line-height:1.05;margin:6px 0 8px}
+.room .roomtxt p{color:var(--mut);font-size:14px;max-width:420px;margin:0}
 </style></head>
 <body>
 <nav id="nav">
@@ -386,20 +391,19 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
   <h2 class="rv">Portraits designed to last.</h2>
   <p class="lead rv">Explore Federico’s black &amp; grey realism, where precision, tonal control, and long-term readability come together.<br>Tap any piece to experience the details.</p>
   <div class="gal rv">
+    <a href="assets/portfolio/legends-full-sleeve.webp"><img loading="lazy" width="1120" height="1400" src="assets/portfolio/legends-full-sleeve.webp" alt="Full leg of black & grey realism portraits — healed, no filter"></a>
+    <a href="assets/portfolio/old-man-portrait.webp"><img loading="lazy" width="1050" height="1400" src="assets/portfolio/old-man-portrait.webp" alt="Black & grey realism portrait of an old man"></a>
+    <a href="assets/portfolio/statement-spartan.webp"><img loading="lazy" width="1120" height="1400" src="assets/portfolio/statement-spartan.webp" alt="Statement Spartan black & grey realism piece"></a>
     <a href="assets/portfolio/spartan-warrior.webp"><img loading="lazy" width="1194" height="1500" src="assets/portfolio/spartan-warrior.webp" alt="Black & grey realism Spartan warrior helmet, forearm tattoo by Federico Galliani"></a>
     <a href="assets/portfolio/hiphop-nyc-portrait.webp"><img loading="lazy" width="1050" height="1400" src="assets/portfolio/hiphop-nyc-portrait.webp" alt="Black & grey realism portrait with New York City skyline, forearm tattoo"></a>
-    <a href="assets/portfolio/woman-skull-realism.webp"><img loading="lazy" width="787" height="1400" src="assets/portfolio/woman-skull-realism.webp" alt="Realistic woman's face with skull detail, black & grey sleeve tattoo"></a>
     <a href="assets/portfolio/greek-statue-backpiece.webp"><img loading="lazy" width="1080" height="1350" src="assets/portfolio/greek-statue-backpiece.webp" alt="Large black & grey realism back piece of a Greek statue"></a>
     <a href="assets/portfolio/young-man-portrait.webp"><img loading="lazy" width="936" height="1400" src="assets/portfolio/young-man-portrait.webp" alt="Clean black & grey realism portrait of a young man, forearm tattoo"></a>
-    <a href="assets/portfolio/father-son-portrait.webp"><img loading="lazy" width="1005" height="1400" src="assets/portfolio/father-son-portrait.webp" alt="Emotive double portrait in black & grey realism, forearm tattoo"></a>
     <a href="assets/portfolio/man-raven-realism.webp"><img loading="lazy" width="788" height="1400" src="assets/portfolio/man-raven-realism.webp" alt="Moody black & grey realism portrait with a raven"></a>
     <a href="assets/portfolio/elder-portrait-leg.webp"><img loading="lazy" width="1035" height="1294" src="assets/portfolio/elder-portrait-leg.webp" alt="Black & grey realism portrait of a bearded elder, leg tattoo"></a>
     <a href="assets/portfolio/skull-eye-realism.webp"><img loading="lazy" width="1050" height="1400" src="assets/portfolio/skull-eye-realism.webp" alt="Skull and eye composition, black & grey realism forearm tattoo"></a>
-    <a href="assets/portfolio/horror-clown-realism.webp"><img loading="lazy" width="1082" height="1400" src="assets/portfolio/horror-clown-realism.webp" alt="Black & grey horror realism portrait, forearm tattoo"></a>
     <a href="assets/portfolio/horror-portrait-arm.webp"><img loading="lazy" width="1120" height="1400" src="assets/portfolio/horror-portrait-arm.webp" alt="Detailed black & grey horror realism portrait, arm tattoo"></a>
     <a href="assets/portfolio/villain-portrait.webp"><img loading="lazy" width="1050" height="1400" src="assets/portfolio/villain-portrait.webp" alt="Two-face villain portrait in black & grey realism, forearm tattoo"></a>
-    <a href="assets/portfolio/creature-realism.webp"><img loading="lazy" width="1073" height="1400" src="assets/portfolio/creature-realism.webp" alt="Dark creature portrait in black & grey realism"></a>
-    <a href="assets/portfolio/legends-full-sleeve.webp"><img loading="lazy" width="1120" height="1400" src="assets/portfolio/legends-full-sleeve.webp" alt="Full sleeve of black & grey realism portraits"></a>
+    
     <a href="assets/portfolio/realistic-eye-detail.webp"><img loading="lazy" width="934" height="1400" src="assets/portfolio/realistic-eye-detail.webp" alt="Hyper-realistic eye detail, black & grey tattoo"></a>
   </div>
 </div></section>
@@ -447,7 +451,19 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
       </ul>
       <div class="out">You leave with: the method in your hands — not in your notes.</div></div>
   </div>
-  <div class="hl rv"><b>Day 3 is the unfair advantage.</b> Ninety percent of tattoo seminars are marathons: the famous artist tattoos, forty people watch a monitor, ask two questions, take a certificate and leave having touched nothing. This is not a seminar you watch. It's a masterclass you <b>execute</b> — needle in your hand, the master beside you.</div>
+  <div class="hl rv"><b>Day 3 is the unfair advantage.</b> Most seminars: forty people watch a monitor. Here you <b>execute</b> — needle in your hand, the master beside you.</div>
+</div></section>
+
+<!-- THE ROOM — l'idea del corso con le persone -->
+<section class="s" id="theroom" style="padding-top:0"><div class="wrap">
+  <div class="room rv">
+    <img src="assets/portfolio/academy-room.webp" width="1376" height="768" alt="Ten artists gathered around the master during a live tattoo masterclass demonstration" loading="lazy">
+    <div class="roomtxt">
+      <div class="eyebrow">The room</div>
+      <h2>Ten artists.<br>Three days.<br>One room.</h2>
+      <p>No audience. No monitor. You're at arm's length from every decision.</p>
+    </div>
+  </div>
 </div></section>
 
 <!-- INSTRUCTOR -->
