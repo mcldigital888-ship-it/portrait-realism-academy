@@ -307,6 +307,34 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
 .room .roomtxt{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:26px;background:linear-gradient(0deg,rgba(5,5,6,.88) 8%,transparent 55%)}
 .room .roomtxt h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(28px,6vw,44px);line-height:1.05;margin:6px 0 8px}
 .room .roomtxt p{color:var(--mut);font-size:14px;max-width:420px;margin:0}
+/* — MOBILE-FIRST PUSH (Marco 30/7): testi GRANDI, animazioni immagini, video hype, grosse scritte — */
+@keyframes kb{0%{transform:scale(1)}100%{transform:scale(1.1)}}
+#mantra .mwrap img.mbg,.room img,.day .ph img{animation:kb 14s ease-in-out infinite alternate}
+.hypev{position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(201,163,92,.4);max-width:430px;margin:0 auto;box-shadow:0 22px 70px rgba(0,0,0,.55)}
+.hypev video{width:100%;height:auto;display:block}
+.hsnd{position:absolute;right:14px;bottom:14px;z-index:3;background:rgba(5,5,6,.7);border:1px solid rgba(236,231,221,.4);color:var(--bone);border-radius:50%;width:48px;height:48px;font-size:19px;cursor:pointer}
+.marq{overflow:hidden;margin:26px 0 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.mtrack{display:flex;gap:12px;width:max-content;animation:marq 38s linear infinite}
+.mtrack img{height:320px;width:auto;border-radius:14px;display:block}
+@keyframes marq{to{transform:translateX(-50%)}}
+.bigsay .bs{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(40px,11vw,88px);line-height:1.0;text-align:center;color:var(--bone);margin:26px 0}
+.bigsay .bs span{display:block;font-family:'Inter',sans-serif;font-weight:300;font-size:clamp(14px,3.8vw,17px);letter-spacing:.5px;color:var(--mut);margin-top:8px}
+.bigsay .bs.gold{color:var(--gold2)}
+@media(max-width:760px){
+  .lead{font-size:18px!important}
+  p.big{font-size:21px!important}
+  .day ul.dl li{font-size:16px}
+  .day .out{font-size:15px}
+  .rrg .tile b{font-size:16px}
+  .rrg .tile small{font-size:13.5px}
+  .ci b{font-size:16px}
+  .ci small{font-size:13px}
+  .paynote{font-size:14.5px!important}
+  .note{font-size:14.5px!important}
+  .room .roomtxt p{font-size:15.5px}
+  .hl{font-size:16px!important}
+}
+@media(prefers-reduced-motion:reduce){#mantra .mwrap img.mbg,.room img,.day .ph img,.mtrack{animation:none}}
 </style></head>
 <body>
 <nav id="nav">
@@ -324,7 +352,7 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
   <div class="wrap in">
     <div class="kick">Black &amp; grey portrait masterclass · Milwaukee · Oct 6–8, 2026</div>
     <h1>Stop hoping your portraits heal well.<span class="it">Master the system that makes them heal clean, age well, and last.</span></h1>
-    <p class="sub">The 3-Day Grey Wash Masterclass with Federico Galliani — 'Portrait KID'<br>The complete framework for creating black &amp; grey portraits with depth, longevity, and flawless healed results.</p>
+    <p class="sub">The 3-Day Grey Wash Masterclass with Federico Galliani — 'Portrait KID'.</p>
     <div class="cta"><a class="btn p pulse" href="#apply">CLAIM ONE OF THE 10 SPOTS</a><a class="btn g" href="#proof">See the proof</a></div>
     <div class="scar"><span class="seat-pill seat-blink"><span class="dot" style="position:static;box-shadow:none"></span> <b class="js-seatsleft">8</b>&nbsp;of 10 spots left</span> <span style="color:var(--mut)">· Day 3 you tattoo hands-on, Federico right beside you.</span></div>
     <div style="font-size:12px;color:var(--mut);margin-top:14px">Applying is free and takes 2 minutes. Not accepted? Every cent back — always.</div>
@@ -347,6 +375,17 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
     <p class="lead" style="text-align:center;max-width:720px;margin-left:auto;margin-right:auto">Dilution. Gradient control. Depth.<br>Master these and every tattoo you make — in any style — gets sharper and lasts.<br><span style="color:var(--gold2)">Learn it as your specialty, or take the technique home to your own style.</span></p>
   </div>
 </div></section>
+
+<!-- HYPE VIDEO — il video buono, fisso in pagina -->
+<section class="s" id="hype" style="padding-top:0"><div class="wrap">
+  <div class="hypev rv">
+    <video id="hypeVid" autoplay muted loop playsinline preload="metadata" poster="assets/video/hype-poster.jpg">
+      <source src="assets/video/hype-web.mp4" type="video/mp4">
+    </video>
+    <button class="hsnd" id="hypeSnd" type="button" aria-label="Attiva audio">🔇</button>
+  </div>
+</div></section>
+<script>(function(){var v=document.getElementById('hypeVid'),b=document.getElementById('hypeSnd');if(!v||!b)return;b.addEventListener('click',function(){v.muted=!v.muted;if(!v.muted){v.play();}b.textContent=v.muted?'🔇':'🔊';});})();</script>
 
 <!-- PROBLEM AGITATION -->
 <section class="s agit" id="problem"><div class="wrap">
@@ -389,7 +428,10 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
 <section class="s" id="work" style="padding-top:0"><div class="wrap">
   <div class="eyebrow rv">The work</div>
   <h2 class="rv">Portraits designed to last.</h2>
-  <p class="lead rv">Explore Federico’s black &amp; grey realism, where precision, tonal control, and long-term readability come together.<br>Tap any piece to experience the details.</p>
+  <div class="marq rv"><div class="mtrack">
+    <img src="assets/portfolio/legends-full-sleeve.webp" alt="" loading="lazy"><img src="assets/portfolio/realistic-eye-detail.webp" alt="" loading="lazy"><img src="assets/portfolio/greek-statue-backpiece.webp" alt="" loading="lazy"><img src="assets/portfolio/hiphop-nyc-portrait.webp" alt="" loading="lazy"><img src="assets/portfolio/old-man-portrait.webp" alt="" loading="lazy"><img src="assets/portfolio/man-raven-realism.webp" alt="" loading="lazy"><img src="assets/portfolio/spartan-warrior.webp" alt="" loading="lazy"><img src="assets/portfolio/elder-portrait-leg.webp" alt="" loading="lazy">
+    <img src="assets/portfolio/legends-full-sleeve.webp" alt="" loading="lazy"><img src="assets/portfolio/realistic-eye-detail.webp" alt="" loading="lazy"><img src="assets/portfolio/greek-statue-backpiece.webp" alt="" loading="lazy"><img src="assets/portfolio/hiphop-nyc-portrait.webp" alt="" loading="lazy"><img src="assets/portfolio/old-man-portrait.webp" alt="" loading="lazy"><img src="assets/portfolio/man-raven-realism.webp" alt="" loading="lazy"><img src="assets/portfolio/spartan-warrior.webp" alt="" loading="lazy"><img src="assets/portfolio/elder-portrait-leg.webp" alt="" loading="lazy">
+  </div></div>
   <div class="gal rv">
     <a href="assets/portfolio/legends-full-sleeve.webp"><img loading="lazy" width="1120" height="1400" src="assets/portfolio/legends-full-sleeve.webp" alt="Full leg of black & grey realism portraits — healed, no filter"></a>
     <a href="assets/portfolio/old-man-portrait.webp"><img loading="lazy" width="1050" height="1400" src="assets/portfolio/old-man-portrait.webp" alt="Black & grey realism portrait of an old man"></a>
@@ -495,6 +537,15 @@ nav .ap,#nav .ap{border-color:rgba(201,163,92,.6);color:var(--gold2)}
     <a class="btn p pulse" href="#apply">Claim one of the 10 spots</a>
   </div>
 </section>
+
+<!-- WHAT YOU GET — grosse comunicazioni -->
+<section class="s" id="youget" style="padding-top:0"><div class="wrap bigsay">
+  <div class="eyebrow rv" style="text-align:center">What you get</div>
+  <div class="bs rv">3 DAYS<span>hands-on. Not watching.</span></div>
+  <div class="bs rv gold">1-ON-1 WITH FEDERICO<span>your station, corrected live</span></div>
+  <div class="bs rv">EVERYTHING PROVIDED<span>you bring only your machine</span></div>
+  <div class="bs rv gold">THE GREY-WASH SYSTEM<span>yours in three days</span></div>
+</div></section>
 
 <!-- ROI / PRICING -->
 <section class="s roi" id="pricing"><div class="wrap">
