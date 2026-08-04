@@ -33,3 +33,8 @@ User-agent: Bytespider
 Allow: /
 
 Sitemap: https://portraitrealismacademy.com/sitemap.xml
+
+# Reserved team areas (noindex)
+User-agent: *
+Disallow: /team-hub-9k2x/
+Disallow: /vault-fede-8k3/
